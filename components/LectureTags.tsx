@@ -1,5 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import {
+  warningTagMatcher,
+  allTagMatcher,
+  associateLevelTagMatcher,
+  proLevelTagMatcher,
+  specialtyLevelTagMatcher,
+  demoTagMatcher,
+  tagBracesMatcher,
+} from "@/constants/tag";
 
 export function LectureTags({ tags }: { tags: string[] }) {
   return (
@@ -37,41 +46,33 @@ export function LectureTag({ tag }: { tag: string }) {
   );
 }
 
-const warningMatcher = /NEEDS|DON'T|DONT/gi;
-const allMatcher = /ALL/gi;
-const associateLevelMatcher = /ASSOCIATE|DVA|SAA|SOA/gi;
-const proLevelMatcher = /PRO(?!D)|SAP|DOP/gi;
-const specialtyLevelMatcher = /ANS|SCS/gi;
-const demoMatcher = /DEMO/gi;
-const tagBracesMatcher = /[\[\]]/gi;
-
 function isWarningTag(tag: string): boolean {
-  let match = tag.match(warningMatcher);
+  let match = tag.match(warningTagMatcher);
   return Boolean(match);
 }
 
 function isAllTag(tag: string): boolean {
-  let match = tag.match(allMatcher);
+  let match = tag.match(allTagMatcher);
   return Boolean(match);
 }
 
 function isAssociateTag(tag: string): boolean {
-  let match = tag.match(associateLevelMatcher);
+  let match = tag.match(associateLevelTagMatcher);
   return Boolean(match);
 }
 
 function isProTag(tag: string): boolean {
-  let match = tag.match(proLevelMatcher);
+  let match = tag.match(proLevelTagMatcher);
   return Boolean(match);
 }
 
 function isSpecialtyTag(tag: string): boolean {
-  let match = tag.match(specialtyLevelMatcher);
+  let match = tag.match(specialtyLevelTagMatcher);
   return Boolean(match);
 }
 
 function isDemoTag(tag: string) {
-  let match = tag.match(demoMatcher);
+  let match = tag.match(demoTagMatcher);
   return Boolean(match);
 }
 
