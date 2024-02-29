@@ -1,4 +1,4 @@
-import { convertTime } from "@/app/lib/utils/lecture";
+import { convertTime } from "@/lib/lecture";
 import { cn } from "@/lib/utils";
 
 export function LectureTime({
