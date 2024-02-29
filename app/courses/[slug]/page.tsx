@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { getFlatCourses, coursesByKey } from "@/lib/getCourses";
 import { cn } from "@/lib/utils";
 import { ListTodo, Cloud, PlaySquare, NotebookPen } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
 
 export async function generateStaticParams() {
   const flatCourses = await getFlatCourses();
@@ -9,6 +10,33 @@ export async function generateStaticParams() {
   return flatCourses.map((course) => ({
     slug: course.code.toUpperCase(),
   }));
+}
+
+type Props = {
+  params: { slug: string };
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const slug = params.slug;
+
+  const courses = await coursesByKey();
+  const certification = courses[params.slug.toLowerCase()];
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  const courseTitle = `${certification.code.toUpperCase()}: ${
+    certification.title
+  }`;
+  return {
+    title: courseTitle,
+    openGraph: {
+      // images: ["/some-specific-page-image.jpg", ...previousImages],
+    },
+  };
 }
 
 export default async function CoursePage({
