@@ -95,11 +95,7 @@ export default async function CoursePage({
                           className="h-min capitalize w-fit break-keep"
                           key={t}
                         >
-                          {t
-                            .replaceAll(squareBracesRegex, "")
-                            .toUpperCase()
-                            .replaceAll("ASSOCIATESHARED", "ASSOCIATE")
-                            .replaceAll("SHAREDALL", "ALL")}
+                          {sanitizeTag(t)}
                         </Badge>
                       ))}
                     </div>
@@ -114,6 +110,18 @@ export default async function CoursePage({
       </main>
     </>
   );
+}
+
+function sanitizeTag(t: any) {
+  return t
+    .replaceAll(squareBracesRegex, "")
+    .toUpperCase()
+    .replaceAll(/(?!\d\s*)UPDATED*(?!\d\s*)/gi, "")
+    .replaceAll("NEEDS", "NEEDS UPDATE")
+    .replaceAll("/", " & ")
+    .replaceAll("AND", "&")
+    .replaceAll("ADVANCEDDEMO", "ADVANCED DEMO")
+    .replaceAll("SHARED", "");
 }
 
 function getCourseTimeHeader(c: any) {
@@ -200,6 +208,11 @@ function getShareWith(l: any, cur: string) {
         className={cn("text-xs min-w-8", cur == "sap-c02" && "font-semibold")}
       >
         {l.sharedWith["sap-c02"] || cur == "sap-c02" ? "SAP" : null}
+      </div>
+      <div
+        className={cn("text-xs min-w-8", cur == "dop-c02" && "font-semibold")}
+      >
+        {l.sharedWith["dop-c02"] || cur == "dop-c02" ? "DOP" : null}
       </div>
       <div
         className={cn("text-xs min-w-8", cur == "ans-c01" && "font-semibold")}
