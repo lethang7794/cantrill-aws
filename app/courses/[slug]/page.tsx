@@ -7,7 +7,7 @@ export async function generateStaticParams() {
   const flatCourses = await getFlatCourses();
 
   return flatCourses.map((course) => ({
-    slug: course.code,
+    slug: course.code.toUpperCase(),
   }));
 }
 
@@ -17,7 +17,7 @@ export default async function CoursePage({
   params: { slug: string };
 }) {
   const courses = await coursesByKey();
-  const certification = courses[params.slug];
+  const certification = courses[params.slug.toLowerCase()];
   if (!certification) {
     return <>Not Found</>;
   }
@@ -25,16 +25,12 @@ export default async function CoursePage({
   const sections = certification.sections;
   return (
     <>
-      {/* <h1>
-        <div>Course: {params.slug}</div>
-        <div>{certification.title}</div>
-      </h1> */}
       <main className="flex min-h-screen flex-col items-left justify-between p-16 gap-4">
         <div className="container">
           <div className="z-10 sticky top-0 bg-white">
             <div className="flex items-center justify-between">
               <h1 className="py-2 text-4xl font-semibold max-h-14 truncate">
-                {`(${certification.code.toUpperCase()}) ${certification.title}`}
+                {`${certification.code.toUpperCase()}: ${certification.title}`}
               </h1>
               <div>{getCourseTimeHeader(certification)}</div>
             </div>
