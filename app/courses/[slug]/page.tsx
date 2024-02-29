@@ -1,8 +1,9 @@
-import { Badge } from "@/components/ui/badge";
 import { getFlatCourses, coursesByKey } from "@/lib/getCourses";
-import { cn } from "@/lib/utils";
-import { ListTodo, Cloud, NotebookPen, Youtube } from "lucide-react";
 import { Metadata, ResolvingMetadata } from "next";
+import { SharedWithOthers } from "@/components/SharedWithOthers";
+import { CourseTags } from "@/components/CourseTags";
+import { LectureIcon } from "@/components/LectureIcon";
+import { CourseTitle } from "@/components/CourseTitle";
 
 export async function generateStaticParams() {
   const flatCourses = await getFlatCourses();
@@ -89,43 +90,15 @@ export default async function CoursePage({
                     className="flex gap-4 items-center"
                     key={l.titleWithDuration}
                   >
-                    <div className="w-5">{getLectureIcon(l)}</div>
-                    <div className="">
-                      {l.titleWithDuration.replaceAll(tagRegex, "")}
-                    </div>
+                    <LectureIcon lecture={l} />
+                    <CourseTitle titleWithDuration={l.titleWithDuration} />
                     <div className="flex-grow"></div>
-                    <div className="flex gap-2 flex-wrap justify-end">
-                      {l.tags.map((t: any) => {
-                        const sanitizedTag = sanitizeTag(t);
-                        return (
-                          <Badge
-                            variant={
-                              isDemoTag(sanitizedTag) ? "default" : "outline"
-                            }
-                            className={cn("h-min capitalize w-fit break-keep", {
-                              "text-white":
-                                isWarningTag(sanitizedTag) ||
-                                isAllTag(sanitizedTag) ||
-                                isAssociateTag(sanitizedTag) ||
-                                isProTag(sanitizedTag) ||
-                                isSpecialtyTag(sanitizedTag),
-                              "bg-[#46505D]": isAllTag(sanitizedTag),
-                              "bg-[#058296]": isProTag(sanitizedTag),
-                              "bg-[#3638EE]": isAssociateTag(sanitizedTag),
-                              "bg-[#5131B1]": isSpecialtyTag(sanitizedTag),
-                              "bg-[#FF9900]": isDemoTag(sanitizedTag),
-                              "bg-red-700": isWarningTag(sanitizedTag),
-                            })}
-                            rounded={isDemoTag(sanitizedTag) ? "full" : "sm"}
-                            key={t}
-                          >
-                            {sanitizedTag}
-                          </Badge>
-                        );
-                      })}
-                    </div>
+                    <CourseTags tags={l.tags} />
                     <div></div>
-                    {getShareWith(l, certification.code)}
+                    <SharedWithOthers
+                      sharedWith={l.sharedWith}
+                      cur={certification.code}
+                    />
                     {getLectureTime(l)}
                   </li>
                 ))}
@@ -136,41 +109,6 @@ export default async function CoursePage({
       </main>
     </>
   );
-}
-
-function isWarningTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/NEEDS|DON'T|DONT/gi);
-}
-
-function isAllTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/ALL/gi);
-}
-
-function isAssociateTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/ASSOCIATE/gi);
-}
-
-function isProTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/PRO(?!D)/gi);
-}
-function isSpecialtyTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/ANS|SCS/gi);
-}
-
-function isDemoTag(tag: string) {
-  return tag.includes("DEMO");
-}
-
-function sanitizeTag(t: string): string {
-  return t
-    .replaceAll(squareBracesRegex, "")
-    .toUpperCase()
-    .replaceAll(/UPDATED*/gi, "")
-    .replaceAll("NEEDS", "NEEDS UPDATE")
-    .replaceAll("/", " & ")
-    .replaceAll("AND", "&")
-    .replaceAll("ADVANCEDDEMO", "ADVANCED DEMO")
-    .replaceAll("SHARED", "");
 }
 
 function getCourseTimeHeader(c: any) {
@@ -217,83 +155,8 @@ function getLectureTime(l: any) {
   );
 }
 
-function isDemo(l: any): boolean {
-  return l.titleWithDuration.match(/demo/gi);
-}
-
-function getLectureIcon(l: any) {
-  if (l.isQuiz) return <ListTodo />;
-  if (isDemo(l)) return <Cloud color="#FF9900" />;
-  if (l.isVideo) return <Youtube color="#FF0000" />;
-  return <NotebookPen />;
-}
-
 function convertTime(seconds: number) {
   return new Date(seconds * 1000).toISOString().slice(14, 19);
 }
 
-const tagRegex = /(\[(\s*\w*[-/&,']*\w*)*\]\s*-*)|(\s*\(\d+:\d+\))/gi;
-const squareBracesRegex = /\[|\]/gi;
-
-function getShareWith(l: any, cur: string) {
-  return (
-    <>
-      <div
-        className={cn(
-          "font-semibold text-xs min-w-8 text-[#3638EE]",
-          cur == "saa-c03" && "font-bold"
-        )}
-      >
-        {l.sharedWith["saa-c03"] || cur == "saa-c03" ? "SAA" : null}
-      </div>
-      <div
-        className={cn(
-          "font-semibold text-xs min-w-8 text-[#3638EE]",
-          cur == "dva-c02" && "font-bold"
-        )}
-      >
-        {l.sharedWith["dva-c02"] || cur == "dva-c02" ? "DVA" : null}
-      </div>
-      <div
-        className={cn(
-          "font-semibold text-xs min-w-8 text-[#3638EE]",
-          cur == "soa-c02" && "font-bold"
-        )}
-      >
-        {l.sharedWith["soa-c02"] || cur == "soa-c02" ? "SOA" : null}
-      </div>
-      <div
-        className={cn(
-          "font-semibold text-xs min-w-8 text-[#058296]",
-          cur == "sap-c02" && "font-bold"
-        )}
-      >
-        {l.sharedWith["sap-c02"] || cur == "sap-c02" ? "SAP" : null}
-      </div>
-      <div
-        className={cn(
-          "font-semibold text-xs min-w-8 text-[#058296]",
-          cur == "dop-c02" && "font-bold"
-        )}
-      >
-        {l.sharedWith["dop-c02"] || cur == "dop-c02" ? "DOP" : null}
-      </div>
-      <div
-        className={cn(
-          "font-semibold text-xs min-w-8 text-[#5131B1]",
-          cur == "ans-c01" && "font-bold"
-        )}
-      >
-        {l.sharedWith["ans-c01"] || cur == "ans-c01" ? "ANS" : null}
-      </div>
-      <div
-        className={cn(
-          "font-semibold text-xs min-w-8 text-[#5131B1]",
-          cur == "scs-c01" && "font-bold"
-        )}
-      >
-        {l.sharedWith["scs-c01"] || cur == "scs-c01" ? "SCS" : null}
-      </div>
-    </>
-  );
-}
+export const squareBracesRegex = /\[|\]/gi;
