@@ -1,8 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-const squareBracesRegex = /[\[\]]/gi;
-
 export function LectureTags({ tags }: { tags: string[] }) {
   return (
     <div className="flex gap-2 flex-wrap justify-end">
@@ -39,33 +37,39 @@ export function LectureTag({ tag }: { tag: string }) {
   );
 }
 
-function isWarningTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/NEEDS|DON'T|DONT/gi);
+function isWarningTag(tag: string): boolean {
+  let match = tag.match(/NEEDS|DON'T|DONT/gi);
+  return Boolean(match);
 }
 
-function isAllTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/ALL/gi);
+function isAllTag(tag: string): boolean {
+  let match = tag.match(/ALL/gi);
+  return Boolean(match);
 }
 
-function isAssociateTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/ASSOCIATE/gi);
+function isAssociateTag(tag: string): boolean {
+  let match = tag.match(/ASSOCIATE|DVA|SAA|SOA/gi);
+  return Boolean(match);
 }
 
-function isProTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/PRO(?!D)/gi);
+function isProTag(tag: string): boolean {
+  let match = tag.match(/PRO(?!D)|SAP|DOP/gi);
+  return Boolean(match);
 }
 
-function isSpecialtyTag(sanitizedTag: string): any {
-  return sanitizedTag.match(/ANS|SCS/gi);
+function isSpecialtyTag(tag: string): boolean {
+  let match = tag.match(/ANS|SCS/gi);
+  return Boolean(match);
 }
 
 function isDemoTag(tag: string) {
-  return tag.includes("DEMO");
+  let match = tag.match(/DEMO/gi);
+  return Boolean(match);
 }
 
-function sanitizeTag(t: string): string {
-  return t
-    .replaceAll(squareBracesRegex, "")
+function sanitizeTag(tag: string): string {
+  return tag
+    .replaceAll(/[\[\]]/gi, "")
     .toUpperCase()
     .replaceAll(/UPDATED*/gi, "")
     .replaceAll("NEEDS", "NEEDS UPDATE")
