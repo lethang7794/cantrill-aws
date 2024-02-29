@@ -9,6 +9,7 @@ import { LectureTime } from "@/components/LectureTime";
 import { CourseTime } from "@/components/CourseTime";
 import { CourseTitle } from "@/components/CourseTitle";
 import { isDemoLecture } from "@/lib/lecture";
+import { CertificationBadge } from "@/components/CertificationBadge";
 
 export async function generateStaticParams() {
   const flatCourses = await getFlatCourses();
@@ -65,12 +66,7 @@ export default async function CoursePage({
         <div className="container">
           <div className="z-10 sticky top-0 bg-white">
             <div className="flex items-center justify-between">
-              <img
-                src={`/aws/${course.code.slice(0, 3).toUpperCase()}.png`}
-                alt=""
-                width={56}
-                height={56}
-              />
+              <CertificationBadge code={course.code} />
               <CourseTitle course={course} />
               <div>
                 <CourseTime course={course} />

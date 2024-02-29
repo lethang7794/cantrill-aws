@@ -1,24 +1,14 @@
 import { cn } from "@/lib/utils";
+import { CertificationCode, SHARED_WITH } from "@/domain/certification";
 
-const SHARED_WITH = {
-  "saa-c03": { name: "SAA", color: "#3638EE" },
-  "dva-c02": { name: "DVA", color: "#3638EE" },
-  "soa-c02": { name: "SOA", color: "#3638EE" },
-  "sap-c02": { name: "SAP", color: "#058296" },
-  "dop-c02": { name: "DOP", color: "#058296" },
-  "ans-c01": { name: "ANS", color: "#5131B1" },
-  "scs-c01": { name: "SCS", color: "#5131B1" },
-} as const;
-type SharedWith = typeof SHARED_WITH;
-type CourseCode = keyof SharedWith;
 function SharedWith({
   sharedWith,
   target,
   cur,
 }: {
-  sharedWith: Record<CourseCode, string>;
-  target: CourseCode;
-  cur: CourseCode;
+  sharedWith: Record<CertificationCode, string>;
+  target: CertificationCode;
+  cur: CertificationCode;
 }) {
   return (
     <div
@@ -32,12 +22,13 @@ function SharedWith({
     </div>
   );
 }
+
 export function LectureSharedWithOthers({
   sharedWith,
   cur,
 }: {
-  sharedWith: Record<CourseCode, string>;
-  cur: CourseCode;
+  sharedWith: Record<CertificationCode, string>;
+  cur: CertificationCode;
 }) {
   return (
     <>
