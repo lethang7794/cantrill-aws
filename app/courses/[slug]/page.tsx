@@ -60,6 +60,12 @@ export default async function CoursePage({
         <div className="container">
           <div className="z-10 sticky top-0 bg-white">
             <div className="flex items-center justify-between">
+              <img
+                src={`/aws/${certification.code.slice(0, 3).toUpperCase()}.png`}
+                alt=""
+                width={56}
+                height={56}
+              />
               <h1 className="py-2 text-4xl font-semibold max-h-14 truncate">
                 {`${certification.code.toUpperCase()}: ${certification.title}`}
               </h1>
