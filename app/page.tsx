@@ -2,23 +2,27 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { promises as fs } from "fs";
 import { Cloud, ListTodo, NotebookPen, PlaySquare } from "lucide-react";
+import { cache } from "react";
 
 export default async function Home() {
-  console.log("Hello");
-  const file = await fs.readFile(process.cwd() + "/app/courses.json", "utf8");
-  const data = JSON.parse(file);
+  const data = await getCourses();
   const certification = data.associate[0];
   const lectures = certification.lectures;
   const lecturesArr = Object.entries(lectures);
 
   const sections = certification.sections;
-  console.log(sections);
 
   return (
-    <main className="flex min-h-screen flex-col items-left justify-between p-24">
+    <main className="flex min-h-screen flex-col items-left justify-between p-24 gap-4">
       {/* {lecturesArr.map((val) => (
         <div key={val[0]}>{val[1].titleWithDuration}</div>
       ))} */}
+      <div className="flex items-center justify-between">
+        <h1 className="text-5xl">
+          {`${certification.title} (${certification.code.toUpperCase()})`}
+        </h1>
+        <div>{getCourseTimeHeader(certification)}</div>
+      </div>
       {sections.map((s) => (
         <ul className="mb-8" key={s.title}>
           <div className="flex gap-4 mb-4">
@@ -56,6 +60,26 @@ export default async function Home() {
         </ul>
       ))}
     </main>
+  );
+}
+
+const getCourses = cache(async () => {
+  const file = await fs.readFile(process.cwd() + "/app/courses.json", "utf8");
+  const data = JSON.parse(file);
+  return data;
+});
+
+function getCourseTimeHeader(c) {
+  return (
+    <>
+      {/* <div className="font-mono w-20 text-right">
+        {s.duration.theory.hhmmss}
+      </div>
+      <div className="font-mono w-20 text-right">{s.duration.demo.hhmmss}</div> */}
+      <div className="font-mono min-w-20 text-right">
+        {c.duration.total.hhmmss}
+      </div>
+    </>
   );
 }
 
