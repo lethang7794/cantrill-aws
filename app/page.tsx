@@ -10,19 +10,25 @@ export default async function Home() {
   const sections = certification.sections;
 
   return (
-    <main className="flex min-h-screen flex-col items-left justify-between p-24 gap-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-5xl">
-          {`${certification.title} (${certification.code.toUpperCase()})`}
-        </h1>
-        <div>{getCourseTimeHeader(certification)}</div>
+    <main className="flex min-h-screen flex-col items-left justify-between p-16 gap-4">
+      <div className="z-10 sticky top-0 bg-white">
+        <div className="flex items-center justify-between">
+          <h1 className="py-2 text-5xl font-semibold">
+            {`${certification.title} (${certification.code.toUpperCase()})`}
+          </h1>
+          <div>{getCourseTimeHeader(certification)}</div>
+        </div>
       </div>
-      {sections.map((s) => (
+      {sections.map((s, idx) => (
         <ul className="mb-8" key={s.title}>
-          <div className="flex gap-4 mb-4">
-            <div className="text-3xl">{s.title}</div>
-            <div className="flex-grow"></div>
-            {getSectionTimeHeader(s)}
+          <div className="sticky top-16 bg-white">
+            <div className="flex gap-4 mb-4">
+              <div className="text-3xl font-semibold">{`${idx + 1}. ${
+                s.title
+              }`}</div>
+              <div className="flex-grow"></div>
+              {getSectionTimeHeader(s)}
+            </div>
           </div>
           <ul className="flex flex-col gap-2">
             {s.lectures.map((l) => (
