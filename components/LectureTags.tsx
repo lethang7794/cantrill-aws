@@ -1,18 +1,19 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { squareBracesRegex } from "../app/courses/[slug]/page";
 
-export function CourseTags({ tags }: { tags: string[] }) {
+const squareBracesRegex = /[\[\]]/gi;
+
+export function LectureTags({ tags }: { tags: string[] }) {
   return (
     <div className="flex gap-2 flex-wrap justify-end">
       {tags.map((t: string) => (
-        <CourseTag key={t} tag={t} />
+        <LectureTag key={t} tag={t} />
       ))}
     </div>
   );
 }
 
-export function CourseTag({ tag }: { tag: string }) {
+export function LectureTag({ tag }: { tag: string }) {
   const sanitizedTag = sanitizeTag(tag);
   return (
     <Badge
@@ -37,24 +38,31 @@ export function CourseTag({ tag }: { tag: string }) {
     </Badge>
   );
 }
+
 function isWarningTag(sanitizedTag: string): any {
   return sanitizedTag.match(/NEEDS|DON'T|DONT/gi);
 }
+
 function isAllTag(sanitizedTag: string): any {
   return sanitizedTag.match(/ALL/gi);
 }
+
 function isAssociateTag(sanitizedTag: string): any {
   return sanitizedTag.match(/ASSOCIATE/gi);
 }
+
 function isProTag(sanitizedTag: string): any {
   return sanitizedTag.match(/PRO(?!D)/gi);
 }
+
 function isSpecialtyTag(sanitizedTag: string): any {
   return sanitizedTag.match(/ANS|SCS/gi);
 }
+
 function isDemoTag(tag: string) {
   return tag.includes("DEMO");
 }
+
 function sanitizeTag(t: string): string {
   return t
     .replaceAll(squareBracesRegex, "")

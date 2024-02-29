@@ -24,7 +24,7 @@ function SharedWith({
     <div
       className={cn(
         "font-semibold text-xs min-w-8 text-[#3638EE]",
-        cur == target && "font-bold"
+        cur == target && "font-bold",
       )}
       style={{ color: SHARED_WITH[target].color }}
     >
@@ -32,7 +32,7 @@ function SharedWith({
     </div>
   );
 }
-export function SharedWithOthers({
+export function LectureSharedWithOthers({
   sharedWith,
   cur,
 }: {

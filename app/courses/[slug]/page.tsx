@@ -1,8 +1,12 @@
-import { getFlatCourses, coursesByKey } from "@/lib/getCourses";
+import { coursesByKey, getFlatCourses } from "@/lib/getCourses";
 import { Metadata, ResolvingMetadata } from "next";
-import { SharedWithOthers } from "@/components/SharedWithOthers";
-import { CourseTags } from "@/components/CourseTags";
+import { LectureSharedWithOthers } from "@/components/LectureSharedWithOthers";
+import { LectureTags } from "@/components/LectureTags";
 import { LectureIcon } from "@/components/LectureIcon";
+import { LectureTitle } from "@/components/LectureTitle";
+import { SectionTime } from "@/components/SectionTime";
+import { LectureTime } from "@/components/LectureTime";
+import { CourseTime } from "@/components/CourseTime";
 import { CourseTitle } from "@/components/CourseTitle";
 
 export async function generateStaticParams() {
@@ -19,7 +23,7 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const slug = params.slug;
 
@@ -49,12 +53,11 @@ export default async function CoursePage({
   params: { slug: string };
 }) {
   const courses = await coursesByKey();
-  const certification = courses[params.slug.toLowerCase()];
-  if (!certification) {
+  const course = courses[params.slug.toLowerCase()];
+  if (!course) {
     return <>Not Found</>;
   }
-
-  const sections = certification.sections;
+  const sections = course.sections;
   return (
     <>
       <main className="flex min-h-screen flex-col items-left justify-between p-16 gap-4">
@@ -62,15 +65,15 @@ export default async function CoursePage({
           <div className="z-10 sticky top-0 bg-white">
             <div className="flex items-center justify-between">
               <img
-                src={`/aws/${certification.code.slice(0, 3).toUpperCase()}.png`}
+                src={`/aws/${course.code.slice(0, 3).toUpperCase()}.png`}
                 alt=""
                 width={56}
                 height={56}
               />
-              <h1 className="py-2 text-4xl font-semibold max-h-14 truncate">
-                {`${certification.code.toUpperCase()}: ${certification.title}`}
-              </h1>
-              <div>{getCourseTimeHeader(certification)}</div>
+              <CourseTitle course={course} />
+              <div>
+                <CourseTime course={course} />
+              </div>
             </div>
           </div>
           {sections.map((s: any, idx: any) => (
@@ -81,7 +84,7 @@ export default async function CoursePage({
                     s.title
                   }`}</div>
                   <div className="flex-grow"></div>
-                  {getSectionTimeHeader(s)}
+                  <SectionTime section={s} />
                 </div>
               </div>
               <ul className="flex flex-col gap-2">
@@ -91,15 +94,15 @@ export default async function CoursePage({
                     key={l.titleWithDuration}
                   >
                     <LectureIcon lecture={l} />
-                    <CourseTitle titleWithDuration={l.titleWithDuration} />
+                    <LectureTitle titleWithDuration={l.titleWithDuration} />
                     <div className="flex-grow"></div>
-                    <CourseTags tags={l.tags} />
+                    <LectureTags tags={l.tags} />
                     <div></div>
-                    <SharedWithOthers
+                    <LectureSharedWithOthers
                       sharedWith={l.sharedWith}
-                      cur={certification.code}
+                      cur={course.code}
                     />
-                    {getLectureTime(l)}
+                    <LectureTime lecture={l} />
                   </li>
                 ))}
               </ul>
@@ -110,53 +113,3 @@ export default async function CoursePage({
     </>
   );
 }
-
-function getCourseTimeHeader(c: any) {
-  return (
-    <>
-      {/* <div className="font-mono min-w-20 text-right">
-        {s.duration.theory.hhmmss}
-      </div>
-      <div className="font-mono min-w-20 text-right">{s.duration.demo.hhmmss}</div> */}
-      <div className="font-mono min-w-20 text-right">
-        {c.duration.total.hhmmss}
-      </div>
-    </>
-  );
-}
-
-function getSectionTimeHeader(s: any) {
-  return (
-    <>
-      {/* <div className="font-mono min-w-20 text-right">
-        {s.duration.theory.hhmmss}
-      </div>
-      <div className="font-mono min-w-20 text-right">{s.duration.demo.hhmmss}</div> */}
-      <div className="font-mono min-w-20 text-right">
-        {s.duration.total.hhmmss}
-      </div>
-    </>
-  );
-}
-
-function getLectureTime(l: any) {
-  return (
-    <>
-      {/* <div className="font-mono min-w-20 text-right">
-        {l.isTheory && l.duration ? convertTime(l.duration) : null}
-      </div>
-      <div className="font-mono min-w-20 text-right">
-        {!l.isTheory && l.duration ? convertTime(l.duration) : null}
-      </div> */}
-      <div className="font-mono min-w-20 text-right">
-        {l.duration ? convertTime(l.duration) : null}
-      </div>
-    </>
-  );
-}
-
-function convertTime(seconds: number) {
-  return new Date(seconds * 1000).toISOString().slice(14, 19);
-}
-
-export const squareBracesRegex = /\[|\]/gi;

@@ -6,7 +6,7 @@ function isDemo(l: { titleWithDuration: string }): boolean {
   return Boolean(match);
 }
 
-const IconWrapper = ({ children }: PropsWithChildren) => (
+const LectureIconWrapper = ({ children }: PropsWithChildren) => (
   <div className="w-5">{children}</div>
 );
 
@@ -21,5 +21,5 @@ export function LectureIcon({ lecture }: { lecture: Record<string, any> }) {
   if (lecture.isVideo) {
     icon = <Youtube color="#FF0000" />;
   }
-  return <IconWrapper>{icon}</IconWrapper>;
+  return <LectureIconWrapper>{icon}</LectureIconWrapper>;
 }

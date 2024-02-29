@@ -1,8 +1,7 @@
-const tagRegex = /(\[(\s*\w*[-/&,']*\w*)*\]\s*-*)|(\s*\(\d+:\d+\))/gi;
-export function CourseTitle({
-  titleWithDuration,
-}: {
-  titleWithDuration: string;
-}) {
-  return <div>{titleWithDuration.replaceAll(tagRegex, "")}</div>;
+export function CourseTitle(props: { course: any }) {
+  return (
+    <h1 className="py-2 text-4xl font-semibold max-h-14 truncate">
+      {`${props.course.code.toUpperCase()}: ${props.course.title}`}
+    </h1>
+  );
 }
