@@ -36,9 +36,9 @@ export default async function CoursePage({
             </div>
           </div>
           {sections.map((s: any, idx: any) => (
-            <ul className="mb-8" key={s.title}>
+            <ul className="my-8" key={s.title}>
               <div className="sticky top-14 bg-white">
-                <div className="flex gap-4 mb-4">
+                <div className="flex gap-4 mb-4 pb-1">
                   <div className="text-3xl font-semibold">{`${idx + 1}. ${
                     s.title
                   }`}</div>
