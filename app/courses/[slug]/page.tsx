@@ -8,6 +8,7 @@ import { SectionTime } from "@/components/SectionTime";
 import { LectureTime } from "@/components/LectureTime";
 import { CourseTime } from "@/components/CourseTime";
 import { CourseTitle } from "@/components/CourseTitle";
+import { isDemoLecture } from "@/lib/lecture";
 
 export async function generateStaticParams() {
   const flatCourses = await getFlatCourses();
@@ -88,23 +89,26 @@ export default async function CoursePage({
                 </div>
               </div>
               <ul className="flex flex-col gap-2">
-                {s.lectures.map((l: any) => (
-                  <li
-                    className="flex gap-4 items-center"
-                    key={l.titleWithDuration}
-                  >
-                    <LectureIcon lecture={l} />
-                    <LectureTitle titleWithDuration={l.titleWithDuration} />
-                    <div className="flex-grow"></div>
-                    <LectureTags tags={l.tags} />
-                    <div></div>
-                    <LectureSharedWithOthers
-                      sharedWith={l.sharedWith}
-                      cur={course.code}
-                    />
-                    <LectureTime lecture={l} />
-                  </li>
-                ))}
+                {s.lectures.map((l: any) => {
+                  let isDemo = isDemoLecture(l);
+                  return (
+                    <li
+                      className="flex gap-4 items-center"
+                      key={l.titleWithDuration}
+                    >
+                      <LectureIcon lecture={l} />
+                      <LectureTitle titleWithDuration={l.titleWithDuration} />
+                      <div className="flex-grow"></div>
+                      <LectureTags tags={l.tags} />
+                      <div></div>
+                      <LectureSharedWithOthers
+                        sharedWith={l.sharedWith}
+                        cur={course.code}
+                      />
+                      <LectureTime lecture={l} isDemo={isDemo} />
+                    </li>
+                  );
+                })}
               </ul>
             </ul>
           ))}

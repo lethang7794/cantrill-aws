@@ -1,13 +1,16 @@
+import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
-  warningTagMatcher,
   allTagMatcher,
   associateLevelTagMatcher,
-  proLevelTagMatcher,
-  specialtyLevelTagMatcher,
   demoTagMatcher,
+  newOrUpdateTagMatcher,
+  proLevelTagMatcher,
+  refresherTagMatcher,
+  specialtyLevelTagMatcher,
   tagBracesMatcher,
+  warningTagMatcher,
 } from "@/constants/tag";
 
 export function LectureTags({ tags }: { tags: string[] }) {
@@ -20,8 +23,12 @@ export function LectureTags({ tags }: { tags: string[] }) {
   );
 }
 
-export function LectureTag({ tag }: { tag: string }) {
+export const LectureTag = React.memo<{ tag: string }>(({ tag }) => {
   const t = sanitizeTag(tag);
+  if (!t) {
+    return null;
+  }
+
   return (
     <Badge
       variant={isDemoTag(t) ? "default" : "outline"}
@@ -31,20 +38,24 @@ export function LectureTag({ tag }: { tag: string }) {
           isAllTag(t) ||
           isAssociateTag(t) ||
           isProTag(t) ||
-          isSpecialtyTag(t),
+          isSpecialtyTag(t) ||
+          isRefresherTag(t) ||
+          isNewTag(t),
         "bg-[#46505D]": isAllTag(t),
         "bg-[#058296]": isProTag(t),
         "bg-[#3638EE]": isAssociateTag(t),
         "bg-[#5131B1]": isSpecialtyTag(t),
         "bg-[#FF9900]": isDemoTag(t),
         "bg-red-700": isWarningTag(t),
+        "bg-blue-400": isRefresherTag(t),
+        "bg-green-500": isNewTag(t),
       })}
       rounded={isDemoTag(t) ? "full" : "sm"}
     >
       {t}
     </Badge>
   );
-}
+});
 
 function isWarningTag(tag: string): boolean {
   let match = tag.match(warningTagMatcher);
@@ -76,6 +87,16 @@ function isDemoTag(tag: string) {
   return Boolean(match);
 }
 
+function isRefresherTag(tag: string) {
+  let match = tag.match(refresherTagMatcher);
+  return Boolean(match);
+}
+
+function isNewTag(tag: string): any {
+  let match = tag.match(newOrUpdateTagMatcher);
+  return Boolean(match);
+}
+
 function sanitizeTag(tag: string): string {
   return (
     tag
@@ -87,10 +108,13 @@ function sanitizeTag(tag: string): string {
       .replaceAll("NEEDS", "NEEDS UPDATE")
       // &
       .replaceAll("/", " & ")
+      .replaceAll(/(?!\w)&(?=\w)/gi, " & ")
       .replaceAll("AND", "&")
-      // add space
+      // make the semantic clear
       .replaceAll("ADVANCEDDEMO", "ADVANCED DEMO")
+      .replaceAll("SAPRO", "SAP")
       // remove redundancy shared
       .replaceAll("SHARED", "")
+      .trim()
   );
 }
