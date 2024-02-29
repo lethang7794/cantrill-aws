@@ -24,6 +24,9 @@ export async function generateMetadata(
 
   const courses = await coursesByKey();
   const certification = courses[params.slug.toLowerCase()];
+  if (!certification) {
+    return { title: "Not Found" };
+  }
 
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
@@ -172,7 +175,7 @@ function convertTime(seconds: number) {
   return new Date(seconds * 1000).toISOString().slice(14, 19);
 }
 
-const tagRegex = /(\[\s*\w*-*\w*\]\s*-*)|(\s*\(\d+:\d+\))/gi;
+const tagRegex = /(\[(\s*\w*[-/&]*\w*)*\]\s*-*)|(\s*\(\d+:\d+\))/gi;
 const squareBracesRegex = /\[|\]/gi;
 
 function getShareWith(l: any, cur: string) {
