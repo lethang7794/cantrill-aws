@@ -14,9 +14,6 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-left justify-between p-24 gap-4">
-      {/* {lecturesArr.map((val) => (
-        <div key={val[0]}>{val[1].titleWithDuration}</div>
-      ))} */}
       <div className="flex items-center justify-between">
         <h1 className="text-5xl">
           {`${certification.title} (${certification.code.toUpperCase()})`}
@@ -72,10 +69,10 @@ const getCourses = cache(async () => {
 function getCourseTimeHeader(c) {
   return (
     <>
-      {/* <div className="font-mono w-20 text-right">
+      {/* <div className="font-mono min-w-20 text-right">
         {s.duration.theory.hhmmss}
       </div>
-      <div className="font-mono w-20 text-right">{s.duration.demo.hhmmss}</div> */}
+      <div className="font-mono min-w-20 text-right">{s.duration.demo.hhmmss}</div> */}
       <div className="font-mono min-w-20 text-right">
         {c.duration.total.hhmmss}
       </div>
@@ -86,10 +83,10 @@ function getCourseTimeHeader(c) {
 function getSectionTimeHeader(s) {
   return (
     <>
-      {/* <div className="font-mono w-20 text-right">
+      {/* <div className="font-mono min-w-20 text-right">
         {s.duration.theory.hhmmss}
       </div>
-      <div className="font-mono w-20 text-right">{s.duration.demo.hhmmss}</div> */}
+      <div className="font-mono min-w-20 text-right">{s.duration.demo.hhmmss}</div> */}
       <div className="font-mono min-w-20 text-right">
         {s.duration.total.hhmmss}
       </div>
@@ -100,10 +97,10 @@ function getSectionTimeHeader(s) {
 function getLectureTime(l: any) {
   return (
     <>
-      {/* <div className="font-mono w-20 text-right">
+      {/* <div className="font-mono min-w-20 text-right">
         {l.isTheory && l.duration ? convertTime(l.duration) : null}
       </div>
-      <div className="font-mono w-20 text-right">
+      <div className="font-mono min-w-20 text-right">
         {!l.isTheory && l.duration ? convertTime(l.duration) : null}
       </div> */}
       <div className="font-mono min-w-20 text-right">
