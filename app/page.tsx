@@ -20,8 +20,8 @@ export default async function Home() {
         <div key={val[0]}>{val[1].titleWithDuration}</div>
       ))} */}
       {sections.map((s) => (
-        <ul className="mb-4" key={s.title}>
-          <div className="flex gap-4">
+        <ul className="mb-8" key={s.title}>
+          <div className="flex gap-4 mb-4">
             <div className="text-3xl">{s.title}</div>
             <div className="flex-grow"></div>
             {getSectionTimeHeader(s)}
