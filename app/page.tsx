@@ -1,8 +1,8 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { promises as fs } from "fs";
 import { Cloud, ListTodo, NotebookPen, PlaySquare } from "lucide-react";
-import { cache } from "react";
+import { getCourses } from "@/lib/getCourses";
+import { getFlatCourses } from "@/lib/getFlatCourses";
 
 export default async function Home() {
   const data = await getCourses();
@@ -19,7 +19,7 @@ export default async function Home() {
           <div>{getCourseTimeHeader(certification)}</div>
         </div>
       </div>
-      {sections.map((s, idx) => (
+      {sections.map((s: any, idx: any) => (
         <ul className="mb-8" key={s.title}>
           <div className="sticky top-16 bg-white">
             <div className="flex gap-4 mb-4">
@@ -31,7 +31,7 @@ export default async function Home() {
             </div>
           </div>
           <ul className="flex flex-col gap-2">
-            {s.lectures.map((l) => (
+            {s.lectures.map((l: any) => (
               <li className="flex gap-4 items-center" key={l.titleWithDuration}>
                 <div className="w-5">{getLectureIcon(l)}</div>
                 <div className="">
@@ -39,7 +39,7 @@ export default async function Home() {
                 </div>
                 <div className="flex-grow"></div>
                 <div className="flex gap-2 flex-wrap">
-                  {l.tags.map((t) => (
+                  {l.tags.map((t: any) => (
                     <Badge
                       variant="outline"
                       className="h-min capitalize w-fit break-keep"
@@ -64,13 +64,7 @@ export default async function Home() {
   );
 }
 
-const getCourses = cache(async () => {
-  const file = await fs.readFile(process.cwd() + "/app/courses.json", "utf8");
-  const data = JSON.parse(file);
-  return data;
-});
-
-function getCourseTimeHeader(c) {
+function getCourseTimeHeader(c: any) {
   return (
     <>
       {/* <div className="font-mono min-w-20 text-right">
@@ -84,7 +78,7 @@ function getCourseTimeHeader(c) {
   );
 }
 
-function getSectionTimeHeader(s) {
+function getSectionTimeHeader(s: any) {
   return (
     <>
       {/* <div className="font-mono min-w-20 text-right">
