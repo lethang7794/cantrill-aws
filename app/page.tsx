@@ -24,15 +24,7 @@ export default async function Home() {
           <div className="flex gap-4">
             <div className="text-3xl">{s.title}</div>
             <div className="flex-grow"></div>
-            <div className="font-mono w-20 text-right">
-              {s.duration.theory.hhmmss}
-            </div>
-            <div className="font-mono w-20 text-right">
-              {s.duration.demo.hhmmss}
-            </div>
-            <div className="font-mono w-20 text-right">
-              {s.duration.total.hhmmss}
-            </div>
+            {getSectionTimeHeader(s)}
           </div>
           <ul>
             {s.lectures.map((l) => (
@@ -54,19 +46,39 @@ export default async function Home() {
                   ))}
                 </div>
                 {getShareWith(l, certification.code)}
-                <div className="font-mono w-20 text-right">
-                  {l.isTheory && l.duration ? convertTime(l.duration) : null}
-                </div>
-                <div className="font-mono w-20 text-right">
-                  {!l.isTheory && l.duration ? convertTime(l.duration) : null}
-                </div>
-                <div className="font-mono w-20 text-right"></div>
+                {getLectureTime(l)}
               </li>
             ))}
           </ul>
         </ul>
       ))}
     </main>
+  );
+}
+
+function getSectionTimeHeader(s) {
+  return (
+    <>
+      <div className="font-mono w-20 text-right">
+        {s.duration.theory.hhmmss}
+      </div>
+      <div className="font-mono w-20 text-right">{s.duration.demo.hhmmss}</div>
+      <div className="font-mono w-20 text-right">{s.duration.total.hhmmss}</div>
+    </>
+  );
+}
+
+function getLectureTime(l: any) {
+  return (
+    <>
+      <div className="font-mono w-20 text-right">
+        {l.isTheory && l.duration ? convertTime(l.duration) : null}
+      </div>
+      <div className="font-mono w-20 text-right">
+        {!l.isTheory && l.duration ? convertTime(l.duration) : null}
+      </div>
+      <div className="font-mono w-20 text-right"></div>
+    </>
   );
 }
 
