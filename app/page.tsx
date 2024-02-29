@@ -26,7 +26,7 @@ export default async function Home() {
             <div className="flex-grow"></div>
             {getSectionTimeHeader(s)}
           </div>
-          <ul>
+          <ul className="flex flex-col gap-2">
             {s.lectures.map((l) => (
               <li className="flex gap-4" key={l.titleWithDuration}>
                 <div className="w-5">{getLectureIcon(l)}</div>
@@ -36,7 +36,10 @@ export default async function Home() {
                 <div className="flex-grow"></div>
                 <div className="flex gap-2">
                   {l.tags.map((t) => (
-                    <Badge variant="outline" className="h-min capitalize">
+                    <Badge
+                      variant="outline"
+                      className="h-min capitalize w-min break-keep"
+                    >
                       {t
                         .replaceAll(squareBracesRegex, "")
                         .toUpperCase()
