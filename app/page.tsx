@@ -7,9 +7,6 @@ import { cache } from "react";
 export default async function Home() {
   const data = await getCourses();
   const certification = data.associate[0];
-  const lectures = certification.lectures;
-  const lecturesArr = Object.entries(lectures);
-
   const sections = certification.sections;
 
   return (
@@ -29,17 +26,18 @@ export default async function Home() {
           </div>
           <ul className="flex flex-col gap-2">
             {s.lectures.map((l) => (
-              <li className="flex gap-4" key={l.titleWithDuration}>
+              <li className="flex gap-4 items-center" key={l.titleWithDuration}>
                 <div className="w-5">{getLectureIcon(l)}</div>
-                <div className="font-semibold">
+                <div className="">
                   {l.titleWithDuration.replaceAll(tagRegex, "")}
                 </div>
                 <div className="flex-grow"></div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   {l.tags.map((t) => (
                     <Badge
                       variant="outline"
-                      className="h-min capitalize w-min break-keep"
+                      className="h-min capitalize w-fit break-keep"
+                      key={t}
                     >
                       {t
                         .replaceAll(squareBracesRegex, "")
