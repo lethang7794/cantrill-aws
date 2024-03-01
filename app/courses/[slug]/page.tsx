@@ -66,8 +66,8 @@ export default async function CoursePage({
   const sections = course.sections;
   return (
     <>
-      <div className="z-10 sticky top-0 bg-white">
-        <div className="flex items-center justify-between">
+      <div className="z-10 sticky top-0 bg-white bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="flex items-center justify-between border-b p-2">
           <CertificationBadge code={course.code} />
           <CourseTitle course={course} />
           <div>
@@ -81,8 +81,8 @@ export default async function CoursePage({
       </div>
       {sections.map((s: any, idx: any) => (
         <ul className="my-8" key={s.title}>
-          <div className="sticky top-14 bg-white">
-            <div className="flex gap-4 mb-4 pb-1">
+          <div className="sticky top-[73px] bg-white bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="flex gap-4 mb-4 py-1 border-b px-2">
               <div className="text-3xl font-semibold">{`${idx + 1}. ${
                 s.title
               }`}</div>
@@ -93,7 +93,7 @@ export default async function CoursePage({
               />
             </div>
           </div>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 px-2">
             {s.lectures.map((l: any) => {
               let isDemo = isDemoLecture(l);
               return (
