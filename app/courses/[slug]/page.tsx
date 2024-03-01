@@ -62,54 +62,50 @@ export default async function CoursePage({
   const sections = course.sections;
   return (
     <>
-      {/* <main className="flex min-h-screen flex-col items-left justify-between p-16 gap-4">
-        <div className="container"> */}
-          <div className="z-10 sticky top-0 bg-white">
-            <div className="flex items-center justify-between">
-              <CertificationBadge code={course.code} />
-              <CourseTitle course={course} />
-              <div>
-                <CourseTime course={course} />
-              </div>
+      <div className="z-10 sticky top-0 bg-white">
+        <div className="flex items-center justify-between">
+          <CertificationBadge code={course.code} />
+          <CourseTitle course={course} />
+          <div>
+            <CourseTime course={course} />
+          </div>
+        </div>
+      </div>
+      {sections.map((s: any, idx: any) => (
+        <ul className="my-8" key={s.title}>
+          <div className="sticky top-14 bg-white">
+            <div className="flex gap-4 mb-4 pb-1">
+              <div className="text-3xl font-semibold">{`${idx + 1}. ${
+                s.title
+              }`}</div>
+              <div className="flex-grow"></div>
+              <SectionTime section={s} />
             </div>
           </div>
-          {sections.map((s: any, idx: any) => (
-            <ul className="my-8" key={s.title}>
-              <div className="sticky top-14 bg-white">
-                <div className="flex gap-4 mb-4 pb-1">
-                  <div className="text-3xl font-semibold">{`${idx + 1}. ${
-                    s.title
-                  }`}</div>
+          <ul className="flex flex-col gap-2">
+            {s.lectures.map((l: any) => {
+              let isDemo = isDemoLecture(l);
+              return (
+                <li
+                  className="flex gap-4 items-center"
+                  key={l.titleWithDuration}
+                >
+                  <LectureIcon lecture={l} />
+                  <LectureTitle titleWithDuration={l.titleWithDuration} />
                   <div className="flex-grow"></div>
-                  <SectionTime section={s} />
-                </div>
-              </div>
-              <ul className="flex flex-col gap-2">
-                {s.lectures.map((l: any) => {
-                  let isDemo = isDemoLecture(l);
-                  return (
-                    <li
-                      className="flex gap-4 items-center"
-                      key={l.titleWithDuration}
-                    >
-                      <LectureIcon lecture={l} />
-                      <LectureTitle titleWithDuration={l.titleWithDuration} />
-                      <div className="flex-grow"></div>
-                      <LectureTags tags={l.tags} />
-                      <div></div>
-                      <LectureSharedWithOthers
-                        sharedWith={l.sharedWith}
-                        cur={course.code}
-                      />
-                      <LectureTime lecture={l} isDemo={isDemo} />
-                    </li>
-                  );
-                })}
-              </ul>
-            </ul>
-          ))}
-        {/* </div>
-      </main> */}
+                  <LectureTags tags={l.tags} />
+                  <div></div>
+                  <LectureSharedWithOthers
+                    sharedWith={l.sharedWith}
+                    cur={course.code}
+                  />
+                  <LectureTime lecture={l} isDemo={isDemo} />
+                </li>
+              );
+            })}
+          </ul>
+        </ul>
+      ))}
     </>
   );
 }
