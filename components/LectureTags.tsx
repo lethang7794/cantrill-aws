@@ -15,6 +15,7 @@ import {
   warningTagMatcher,
 } from "@/constants/tag";
 import { useApp } from "@/context/app.context";
+import { Separator } from "./ui/separator";
 
 export function LectureTags({ tags }: { tags: string[] }) {
   const { state } = useApp();
@@ -24,11 +25,14 @@ export function LectureTags({ tags }: { tags: string[] }) {
   }
 
   return (
-    <div className="flex gap-2 flex-wrap justify-end">
-      {tags.map((t: string) => (
-        <LectureTag key={t} tag={t} />
-      ))}
-    </div>
+    <>
+      <div className="flex gap-2 flex-wrap justify-end">
+        {tags.map((t: string) => (
+          <LectureTag key={t} tag={t} />
+        ))}
+      </div>
+      <Separator orientation="vertical" className="min-h-8 -mr-3 ml-1 -my-2" />
+    </>
   );
 }
 
