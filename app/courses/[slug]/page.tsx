@@ -25,7 +25,7 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata,
+  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const slug = params.slug;
 
@@ -62,8 +62,8 @@ export default async function CoursePage({
   const sections = course.sections;
   return (
     <>
-      <main className="flex min-h-screen flex-col items-left justify-between p-16 gap-4">
-        <div className="container">
+      {/* <main className="flex min-h-screen flex-col items-left justify-between p-16 gap-4">
+        <div className="container"> */}
           <div className="z-10 sticky top-0 bg-white">
             <div className="flex items-center justify-between">
               <CertificationBadge code={course.code} />
@@ -108,8 +108,8 @@ export default async function CoursePage({
               </ul>
             </ul>
           ))}
-        </div>
-      </main>
+        {/* </div>
+      </main> */}
     </>
   );
 }
