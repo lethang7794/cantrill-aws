@@ -1,6 +1,7 @@
 import { CertificationBadge } from "@/components/CertificationBadge";
 import { getCourses } from "@/lib/getCourses";
 import { titleCase } from "@/lib/string";
+import { cn } from "@/lib/utils";
 import React, { PropsWithChildren } from "react";
 
 export default async function CoursesPage() {
@@ -29,13 +30,17 @@ export default async function CoursesPage() {
                   <div className="flex gap-6 font-mono">
                     <LessonCountCell>Theory</LessonCountCell>
                     <LessonCountCell>Demo</LessonCountCell>
-                    <LessonCountCell>Total</LessonCountCell>
+                    <LessonCountCell className="font-bold">
+                      Total
+                    </LessonCountCell>
 
                     <div></div>
 
-                    <LessonDurationCell>Theory</LessonDurationCell>
-                    <LessonDurationCell>Demo</LessonDurationCell>
-                    <LessonDurationCell>Total</LessonDurationCell>
+                    <LessonDurationCell header>Theory</LessonDurationCell>
+                    <LessonDurationCell header>Demo</LessonDurationCell>
+                    <LessonDurationCell header className="font-bold">
+                      Total
+                    </LessonDurationCell>
                   </div>
                 </div>
               </div>
@@ -83,7 +88,7 @@ export default async function CoursesPage() {
                             <LessonCountCell>
                               {course.count.demo}
                             </LessonCountCell>
-                            <LessonCountCell>
+                            <LessonCountCell className="font-bold">
                               {course.count.total}
                             </LessonCountCell>
 
@@ -95,7 +100,7 @@ export default async function CoursesPage() {
                             <LessonDurationCell>
                               {course.duration.demo.hhmmss}
                             </LessonDurationCell>
-                            <LessonDurationCell>
+                            <LessonDurationCell className="font-bold">
                               {course.duration.total.hhmmss}
                             </LessonDurationCell>
                           </div>
@@ -122,9 +127,39 @@ function CertificationCodeCell({ children }: PropsWithChildren) {
 function CertificationNameCell({ children }: PropsWithChildren) {
   return <div className="min-w-32">{children}</div>;
 }
-function LessonCountCell({ children }: PropsWithChildren) {
-  return <div className="min-w-16 text-right">{children}</div>;
+function LessonCountCell({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<"div"> & PropsWithChildren) {
+  return (
+    <div {...props} className={cn("min-w-16 text-right", className)}>
+      {children}
+    </div>
+  );
 }
-function LessonDurationCell({ children }: PropsWithChildren) {
-  return <div className="min-w-20 text-right">{children}</div>;
+
+const LessonDurationWrapper = ({
+  children,
+  className,
+}: React.ComponentProps<"div"> & PropsWithChildren) => (
+  <div className={cn("min-w-16 text-right", className)}>{children}</div>
+);
+function LessonDurationCell({
+  children,
+  header,
+  ...props
+}: React.ComponentProps<"div"> & PropsWithChildren<{ header?: boolean }>) {
+  if (header) {
+    return <LessonDurationWrapper {...props}>{children}</LessonDurationWrapper>;
+  }
+  if (typeof children != "string") {
+    return null;
+  }
+  const hh = Number(children.slice(0, 2));
+  const mm = Number(children.slice(3, 5));
+  console.log({ children, hh, mm });
+  const hour = hh + (mm < 20 ? 0 : 1);
+
+  return <LessonDurationWrapper {...props}>{hour}h</LessonDurationWrapper>;
 }
