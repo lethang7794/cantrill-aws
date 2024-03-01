@@ -28,7 +28,7 @@ export default async function CoursesPage() {
                   <div className="flex-grow" />
 
                   <div className="flex gap-6 items-center">
-                    <LessonCountCell>
+                    {/* <LessonCountCell>
                       Theory
                       <br />
                       <Unit>(lectures)</Unit>
@@ -42,7 +42,7 @@ export default async function CoursesPage() {
                       Total
                       <br />
                       <Unit>(lectures)</Unit>
-                    </LessonCountCell>
+                    </LessonCountCell> */}
 
                     <LessonDurationCell header>
                       Theory
@@ -59,6 +59,8 @@ export default async function CoursesPage() {
                       <br />
                       <Unit>(hours)</Unit>
                     </LessonDurationCell>
+
+                    <div />
 
                     <CurriculumCell>
                       Course
@@ -110,7 +112,7 @@ export default async function CoursesPage() {
                           <div className="flex-grow" />
 
                           <div className="flex gap-6 items-center">
-                            <LessonCountCell>
+                            {/* <LessonCountCell>
                               {course.count.theory}
                             </LessonCountCell>
                             <LessonCountCell>
@@ -118,7 +120,7 @@ export default async function CoursesPage() {
                             </LessonCountCell>
                             <LessonCountCell className="font-bold">
                               {course.count.total}
-                            </LessonCountCell>
+                            </LessonCountCell> */}
 
                             <LessonDurationCell>
                               {course.duration.theory.hhmmss}
@@ -130,26 +132,17 @@ export default async function CoursesPage() {
                               {course.duration.total.hhmmss}
                             </LessonDurationCell>
 
+                            <div />
+
                             <CurriculumCell>
-                              <Button
-                                asChild
-                                // variant="link"
-                                // className="whitespace-break-spaces"
-                              >
-                                <a href={`/courses/${code}`}>
-                                  {/* {code} */}
-                                  Curriculum
-                                </a>
+                              <Button asChild>
+                                <a href={`/courses/${code}`}>Curriculum</a>
                               </Button>
                             </CurriculumCell>
 
                             <CourseUrlCell>
                               <Button asChild variant="outline">
-                                <a href={course.url}>
-                                  {/* <span className="text-nowrap">{code}</span>
-                                  <br /> */}
-                                  Course
-                                </a>
+                                <a href={course.url}>Course</a>
                               </Button>
                             </CourseUrlCell>
                           </div>
