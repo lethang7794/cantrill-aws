@@ -4,9 +4,11 @@ import * as React from "react";
 
 type Action =
   | { type: "set-show-tag"; payload: boolean }
+  | { type: "set-courses"; payload: string[] };
 type Dispatch = (action: Action) => void;
 type State = {
   showTag: boolean;
+  courses: string[];
 };
 type AppProviderProps = { children: React.ReactNode };
 
@@ -19,6 +21,8 @@ function appReducer(state: State, action: Action) {
     case "set-show-tag": {
       return { ...state, showTag: action.payload };
     }
+    case "set-courses": {
+      return { ...state, courses: action.payload };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -29,6 +33,7 @@ function appReducer(state: State, action: Action) {
 function AppProvider({ children }: AppProviderProps) {
   const [state, dispatch] = React.useReducer(appReducer, {
     showTag: true,
+    courses: [],
   });
 
   const value = React.useMemo(() => {

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -12,8 +14,15 @@ import {
   tagBracesMatcher,
   warningTagMatcher,
 } from "@/constants/tag";
+import { useApp } from "@/context/app.context";
 
 export function LectureTags({ tags }: { tags: string[] }) {
+  const { state } = useApp();
+
+  if (state.showTag === false) {
+    return null;
+  }
+
   return (
     <div className="flex gap-2 flex-wrap justify-end">
       {tags.map((t: string) => (
