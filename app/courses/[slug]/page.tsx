@@ -79,7 +79,10 @@ export default async function CoursePage({
                 s.title
               }`}</div>
               <div className="flex-grow"></div>
-              <SectionTime section={s} />
+              <SectionTime
+                section={s}
+                side={idx === 0 ? "bottom" : undefined}
+              />
             </div>
           </div>
           <ul className="flex flex-col gap-2">

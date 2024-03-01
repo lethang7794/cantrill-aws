@@ -1,13 +1,28 @@
-export function SectionTime({ section }: { section: any }) {
+import { TimeTooltip } from "./TimeTooltip";
+
+export function SectionTime({
+  section,
+  side,
+}: {
+  section: any;
+  side?: "bottom";
+}) {
   return (
     <>
-      {/* <div className="font-mono min-w-20 text-right">
-        {section.duration.theory.hhmmss}
-      </div>
-      <div className="font-mono min-w-20 text-right">{section.duration.demo.hhmmss}</div> */}
-      <div className="font-mono min-w-20 text-right">
-        {section.duration.total.hhmmss}
-      </div>
+      <TimeTooltip
+        tooltip={
+          <div>
+            <div>Section duration (hh:mm:ss)</div>
+            <div>- Theory: {section.duration.theory.hhmmss}</div>
+            <div>- Demo: {section.duration.demo.hhmmss}</div>
+          </div>
+        }
+        side={side}
+      >
+        <div className="font-mono min-w-20 text-right">
+          {section.duration.total.hhmmss}
+        </div>
+      </TimeTooltip>
     </>
   );
 }
