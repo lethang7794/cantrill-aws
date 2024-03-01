@@ -1,5 +1,9 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { CertificationCode, SHARED_WITH } from "@/domain/certification";
+import { useApp } from "@/context/app.context";
+import { COURSES } from "@/constants/course";
 
 function SharedWith({
   sharedWith,
@@ -14,7 +18,7 @@ function SharedWith({
     <div
       className={cn(
         "font-semibold text-xs min-w-8 text-[#3638EE]",
-        cur == target && "font-bold",
+        cur == target && "font-bold"
       )}
       style={{ color: SHARED_WITH[target].color }}
     >
@@ -30,15 +34,20 @@ export function LectureSharedWithOthers({
   sharedWith: Record<CertificationCode, string>;
   cur: CertificationCode;
 }) {
+  const { state, dispatch } = useApp();
+
+  function shouldShowCourse(code: string) {
+    return state.courses.includes(code) || code == cur;
+  }
+
   return (
     <>
-      <SharedWith sharedWith={sharedWith} cur={cur} target="saa-c03" />
-      <SharedWith sharedWith={sharedWith} cur={cur} target="dva-c02" />
-      <SharedWith sharedWith={sharedWith} cur={cur} target="soa-c02" />
-      <SharedWith sharedWith={sharedWith} cur={cur} target="sap-c02" />
-      <SharedWith sharedWith={sharedWith} cur={cur} target="dop-c02" />
-      <SharedWith sharedWith={sharedWith} cur={cur} target="ans-c01" />
-      <SharedWith sharedWith={sharedWith} cur={cur} target="scs-c01" />
+      {COURSES.map(
+        (c) =>
+          shouldShowCourse(c) && (
+            <SharedWith key={c} sharedWith={sharedWith} cur={cur} target={c} />
+          )
+      )}
     </>
   );
 }

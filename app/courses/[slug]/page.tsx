@@ -57,7 +57,8 @@ export default async function CoursePage({
   params: { slug: string };
 }) {
   const courses = await coursesByKey();
-  const course = courses[params.slug.toLowerCase()];
+  const slug = params.slug.toLowerCase();
+  const course = courses[slug];
   if (!course) {
     return <>Not Found</>;
   }
@@ -76,7 +77,7 @@ export default async function CoursePage({
       </div>
       <div className="pt-8 flex">
         <ToggleShowTag />
-        <CoursesCompareSetting />
+        <CoursesCompareSetting currentCourse={slug as any} />
       </div>
       {sections.map((s: any, idx: any) => (
         <ul className="my-8" key={s.title}>
