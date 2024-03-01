@@ -75,7 +75,7 @@ export default async function CoursePage({
           </div>
         </div>
       </div>
-      <div className="pt-8 flex">
+      <div className="pt-8 flex gap-4">
         <ToggleShowTag />
         <CoursesCompareSetting currentCourse={slug as any} />
       </div>
