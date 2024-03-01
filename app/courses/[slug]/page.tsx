@@ -10,6 +10,7 @@ import { CourseTime } from "@/components/CourseTime";
 import { CourseTitle } from "@/components/CourseTitle";
 import { isDemoLecture } from "@/lib/lecture";
 import { CertificationBadge } from "@/components/CertificationBadge";
+import { ToggleShowTag } from "@/components/ToggleShowTag";
 
 export async function generateStaticParams() {
   const flatCourses = await getFlatCourses();
@@ -70,6 +71,9 @@ export default async function CoursePage({
             <CourseTime course={course} />
           </div>
         </div>
+      </div>
+      <div className="pt-8 flex">
+        <ToggleShowTag />
       </div>
       {sections.map((s: any, idx: any) => (
         <ul className="my-8" key={s.title}>

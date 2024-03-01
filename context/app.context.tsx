@@ -2,7 +2,8 @@
 
 import * as React from "react";
 
-type Action = { type: "toggle-show-tag" } | { type: "update-learned-courses" };
+type Action =
+  | { type: "set-show-tag"; payload: boolean }
 type Dispatch = (action: Action) => void;
 type State = {
   showTag: boolean;
@@ -15,8 +16,9 @@ const CountStateContext = React.createContext<
 
 function appReducer(state: State, action: Action) {
   switch (action.type) {
-    case "toggle-show-tag": {
-      return { showTag: !state.showTag };
+    case "set-show-tag": {
+      return { ...state, showTag: action.payload };
+    }
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -25,7 +27,9 @@ function appReducer(state: State, action: Action) {
 }
 
 function AppProvider({ children }: AppProviderProps) {
-  const [state, dispatch] = React.useReducer(appReducer, { showTag: false });
+  const [state, dispatch] = React.useReducer(appReducer, {
+    showTag: true,
+  });
 
   const value = React.useMemo(() => {
     return { state, dispatch };
