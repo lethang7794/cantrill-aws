@@ -1,4 +1,4 @@
-import { TimeTooltip } from "./TimeTooltip";
+import { TimeTooltip } from "@/components/TimeTooltip";
 
 export function SectionTime({
   section,
@@ -8,21 +8,19 @@ export function SectionTime({
   side?: "bottom";
 }) {
   return (
-    <>
-      <TimeTooltip
-        tooltip={
-          <div>
-            <div>Section duration (hh:mm:ss)</div>
-            <div>- Theory: {section.duration.theory.hhmmss}</div>
-            <div>- Demo: {section.duration.demo.hhmmss}</div>
-          </div>
-        }
-        side={side}
-      >
-        <div className="font-mono min-w-20 text-right">
-          {section.duration.total.hhmmss}
+    <TimeTooltip
+      tooltip={
+        <div>
+          <div className="font-bold">Section duration (hh:mm:ss)</div>
+          <div>- Theory: {section.duration.theory.hhmmss}</div>
+          <div>- Demo: {section.duration.demo.hhmmss}</div>
         </div>
-      </TimeTooltip>
-    </>
+      }
+      side={side}
+    >
+      <div className="font-mono min-w-20 text-right">
+        {section.duration.total.hhmmss}
+      </div>
+    </TimeTooltip>
   );
 }
