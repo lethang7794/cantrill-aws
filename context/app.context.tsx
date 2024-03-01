@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { LOCAL_STORAGE_APP_STATE_KEY } from "@/constants/localStorage";
 
 type Action =
   | { type: "set-show-tag"; payload: boolean }
@@ -19,10 +20,14 @@ const CountStateContext = React.createContext<
 function appReducer(state: State, action: Action) {
   switch (action.type) {
     case "set-show-tag": {
-      return { ...state, showTag: action.payload };
+      const nextState = { ...state, showTag: action.payload };
+      setLocalStorage(nextState);
+      return nextState;
     }
     case "set-courses": {
-      return { ...state, courses: action.payload };
+      const nextState = { ...state, courses: action.payload };
+      setLocalStorage(nextState);
+      return nextState;
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -30,10 +35,24 @@ function appReducer(state: State, action: Action) {
   }
 }
 
+const initState: State = {
+  showTag: true,
+  courses: [],
+};
+
+function setLocalStorage(state: State) {
+  window.localStorage.setItem(
+    LOCAL_STORAGE_APP_STATE_KEY,
+    JSON.stringify(state)
+  );
+}
+
 function AppProvider({ children }: AppProviderProps) {
-  const [state, dispatch] = React.useReducer(appReducer, {
-    showTag: true,
-    courses: [],
+  const [state, dispatch] = React.useReducer(appReducer, initState, () => {
+    const stickyValue = window.localStorage.getItem(
+      LOCAL_STORAGE_APP_STATE_KEY
+    );
+    return stickyValue !== null ? JSON.parse(stickyValue) : initState;
   });
 
   const value = React.useMemo(() => {

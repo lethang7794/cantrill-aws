@@ -2,6 +2,7 @@ import { CertificationBadge } from "@/components/CertificationBadge";
 import { Button } from "@/components/ui/button";
 import { getCourses } from "@/lib/getCourses";
 import { cn } from "@/lib/utils";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import React, { PropsWithChildren } from "react";
 
@@ -146,6 +147,7 @@ export default async function CoursesPage() {
                             <CourseUrlCell>
                               <Button asChild variant="outline">
                                 <a href={course.url} target="_blank">
+                                  <ExternalLink className="mr-2 h-4 w-4" />
                                   Course
                                 </a>
                               </Button>
