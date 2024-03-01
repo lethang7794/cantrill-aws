@@ -1,8 +1,7 @@
-import { CertificationBadge } from "@/components/CertificationBadge";
-import { getCourses } from "@/lib/getCourses";
-import { titleCase } from "@/lib/string";
-import { cn } from "@/lib/utils";
-import React, { PropsWithChildren } from "react";
+import {CertificationBadge} from "@/components/CertificationBadge";
+import {getCourses} from "@/lib/getCourses";
+import {cn} from "@/lib/utils";
+import React, {PropsWithChildren} from "react";
 
 export default async function CoursesPage() {
   const courses = await getCourses();
@@ -15,32 +14,56 @@ export default async function CoursesPage() {
             <li>
               <div>
                 <div className="flex items-center gap-2">
-                  <CertificationBadgeCell />
+                  <CertificationBadgeCell/>
 
                   <CertificationCodeCell>
-                    <div className="font-mono">Code</div>
+                    <div>Code</div>
                   </CertificationCodeCell>
 
                   <CertificationNameCell>
                     <div>Name</div>
                   </CertificationNameCell>
 
-                  <div className="flex-grow" />
+                  <div className="flex-grow"/>
 
-                  <div className="flex gap-6 font-mono">
-                    <LessonCountCell>Theory</LessonCountCell>
-                    <LessonCountCell>Demo</LessonCountCell>
+                  <div className="flex gap-6">
+                    <LessonCountCell>
+                      Theory
+                      <br/>
+                      <Unit>(lectures)</Unit>
+                    </LessonCountCell>
+                    <LessonCountCell>
+                      Demo
+                      <br/>
+                      <Unit>(lectures)</Unit>
+                    </LessonCountCell>
                     <LessonCountCell className="font-bold">
                       Total
+                      <br/>
+                      <Unit>(lectures)</Unit>
                     </LessonCountCell>
 
-                    <div></div>
-
-                    <LessonDurationCell header>Theory</LessonDurationCell>
-                    <LessonDurationCell header>Demo</LessonDurationCell>
+                    <LessonDurationCell header>
+                      Theory
+                      <br/>
+                      <Unit>(hours)</Unit>
+                    </LessonDurationCell>
+                    <LessonDurationCell header>
+                      Demo
+                      <br/>
+                      <Unit>(hours)</Unit>
+                    </LessonDurationCell>
                     <LessonDurationCell header className="font-bold">
                       Total
+                      <br/>
+                      <Unit>(hours)</Unit>
                     </LessonDurationCell>
+
+                    <CurriculumCell>Course<br/>Curriculum</CurriculumCell>
+
+                    <CourseUrlCell>
+                      Course<br/>URL
+                    </CourseUrlCell>
                   </div>
                 </div>
               </div>
@@ -53,13 +76,13 @@ export default async function CoursesPage() {
         return (
           <ul key={level} className="mb-2">
             <li>
-              <div className="text-xl">{level.toUpperCase()}</div>
+              {/* <div className="text-xl">{level.toUpperCase()}</div> */}
               <ul className="flex flex-col gap-2">
                 {(levelCourse as any[]).map((course) => {
                   const code = course.code.toUpperCase();
                   return (
                     <li key={code}>
-                      <a href={`/courses/${code}`}>
+                      <div>
                         <div className="flex items-center gap-2">
                           <CertificationBadgeCell>
                             <CertificationBadge
@@ -70,18 +93,16 @@ export default async function CoursesPage() {
                           </CertificationBadgeCell>
 
                           <CertificationCodeCell>
-                            <div className="font-mono">
-                              {code.toUpperCase()}
-                            </div>
+                            <div>{code.toUpperCase()}</div>
                           </CertificationCodeCell>
 
                           <CertificationNameCell>
-                            <div>{course.title}</div>
+                            <div className="italic">{course.title}</div>
                           </CertificationNameCell>
 
-                          <div className="flex-grow" />
+                          <div className="flex-grow"/>
 
-                          <div className="flex gap-6 font-mono">
+                          <div className="flex gap-6">
                             <LessonCountCell>
                               {course.count.theory}
                             </LessonCountCell>
@@ -92,8 +113,6 @@ export default async function CoursesPage() {
                               {course.count.total}
                             </LessonCountCell>
 
-                            <div></div>
-
                             <LessonDurationCell>
                               {course.duration.theory.hhmmss}
                             </LessonDurationCell>
@@ -103,9 +122,25 @@ export default async function CoursesPage() {
                             <LessonDurationCell className="font-bold">
                               {course.duration.total.hhmmss}
                             </LessonDurationCell>
+
+                            <CurriculumCell>
+                              <a href={`/courses/${code}`}>
+                                <span className="text-nowrap">{code}</span>
+                                <br/>
+                                Curriculum
+                              </a>
+                            </CurriculumCell>
+
+                            <CourseUrlCell>
+                              <a href={course.url}>
+                                <span className="text-nowrap">{code}</span>
+                                <br/>
+                                Course
+                              </a>
+                            </CourseUrlCell>
                           </div>
                         </div>
-                      </a>
+                      </div>
                     </li>
                   );
                 })}
@@ -118,20 +153,23 @@ export default async function CoursesPage() {
   );
 }
 
-function CertificationBadgeCell({ children }: PropsWithChildren) {
+function CertificationBadgeCell({children}: PropsWithChildren) {
   return <div className="min-w-32">{children}</div>;
 }
-function CertificationCodeCell({ children }: PropsWithChildren) {
-  return <div className="min-w-20">{children}</div>;
+
+function CertificationCodeCell({children}: PropsWithChildren) {
+  return <div className="min-w-20 font-bold">{children}</div>;
 }
-function CertificationNameCell({ children }: PropsWithChildren) {
-  return <div className="min-w-32">{children}</div>;
+
+function CertificationNameCell({children}: PropsWithChildren) {
+  return <div className="min-w-32 font-bold">{children}</div>;
 }
+
 function LessonCountCell({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & PropsWithChildren) {
+                           children,
+                           className,
+                           ...props
+                         }: React.ComponentProps<"div"> & PropsWithChildren) {
   return (
     <div {...props} className={cn("min-w-16 text-right", className)}>
       {children}
@@ -140,16 +178,17 @@ function LessonCountCell({
 }
 
 const LessonDurationWrapper = ({
-  children,
-  className,
-}: React.ComponentProps<"div"> & PropsWithChildren) => (
+                                 children,
+                                 className,
+                               }: React.ComponentProps<"div"> & PropsWithChildren) => (
   <div className={cn("min-w-16 text-right", className)}>{children}</div>
 );
+
 function LessonDurationCell({
-  children,
-  header,
-  ...props
-}: React.ComponentProps<"div"> & PropsWithChildren<{ header?: boolean }>) {
+                              children,
+                              header,
+                              ...props
+                            }: React.ComponentProps<"div"> & PropsWithChildren<{ header?: boolean }>) {
   if (header) {
     return <LessonDurationWrapper {...props}>{children}</LessonDurationWrapper>;
   }
@@ -158,8 +197,19 @@ function LessonDurationCell({
   }
   const hh = Number(children.slice(0, 2));
   const mm = Number(children.slice(3, 5));
-  console.log({ children, hh, mm });
   const hour = hh + (mm < 20 ? 0 : 1);
 
   return <LessonDurationWrapper {...props}>{hour}h</LessonDurationWrapper>;
+}
+
+function Unit({children}: PropsWithChildren) {
+  return <div className="text-xs">{children}</div>;
+}
+
+function CurriculumCell(props: PropsWithChildren) {
+  return <div className="min-w-16 text-right font-bold">{props.children}</div>;
+}
+
+function CourseUrlCell(props: PropsWithChildren) {
+  return <div className="min-w-16 text-right">{props.children}</div>;
 }
