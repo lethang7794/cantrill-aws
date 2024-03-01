@@ -2,6 +2,7 @@ import { CertificationBadge } from "@/components/CertificationBadge";
 import { Button } from "@/components/ui/button";
 import { getCourses } from "@/lib/getCourses";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import React, { PropsWithChildren } from "react";
 
 export default async function CoursesPage() {
@@ -136,13 +137,17 @@ export default async function CoursesPage() {
 
                             <CurriculumCell>
                               <Button asChild>
-                                <a href={`/courses/${code}`}>Curriculum</a>
+                                <Link href={`/courses/${code}`}>
+                                  Curriculum
+                                </Link>
                               </Button>
                             </CurriculumCell>
 
                             <CourseUrlCell>
                               <Button asChild variant="outline">
-                                <a href={course.url}>Course</a>
+                                <a href={course.url} target="_blank">
+                                  Course
+                                </a>
                               </Button>
                             </CourseUrlCell>
                           </div>
