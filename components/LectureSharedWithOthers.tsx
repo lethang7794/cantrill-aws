@@ -1,19 +1,18 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CertificationCode, SHARED_WITH } from "@/domain/certification";
-import { useApp } from "@/context/app.context";
-import { COURSES } from "@/constants/course";
 import { Separator } from "@/components/ui/separator";
+import { COURSES, COURSE_CODES, CourseCode } from "@/constants/courses";
+import { useApp } from "@/context/app.context";
 
 function SharedWith({
   sharedWith,
   target,
   cur,
 }: {
-  sharedWith: Record<CertificationCode, string>;
-  target: CertificationCode;
-  cur: CertificationCode;
+  sharedWith: Record<CourseCode, string>;
+  target: CourseCode;
+  cur: CourseCode;
 }) {
   return (
     <div
@@ -21,9 +20,9 @@ function SharedWith({
         "font-semibold text-xs min-w-8 text-center text-[#3638EE]",
         cur == target && "font-bold underline"
       )}
-      style={{ color: SHARED_WITH[target].color }}
+      style={{ color: COURSES[target].color }}
     >
-      {sharedWith[target] || cur == target ? SHARED_WITH[target].name : null}
+      {sharedWith[target] || cur == target ? COURSES[target].name : null}
     </div>
   );
 }
@@ -32,18 +31,18 @@ export function LectureSharedWithOthers({
   sharedWith,
   cur,
 }: {
-  sharedWith: Record<CertificationCode, string>;
-  cur: CertificationCode;
+  sharedWith: Record<CourseCode, string>;
+  cur: CourseCode;
 }) {
   const { state, dispatch } = useApp();
 
   function shouldShowCourse(code: string) {
-    return state.courses.includes(code) || code == cur;
+    return state?.courses?.includes(code) || code == cur;
   }
 
   return (
     <>
-      {COURSES.map(
+      {COURSE_CODES.map(
         (c) =>
           shouldShowCourse(c) && (
             <SharedWith key={c} sharedWith={sharedWith} cur={cur} target={c} />

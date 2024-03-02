@@ -2,19 +2,18 @@
 
 import { useApp } from "@/context/app.context";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CertificationCode } from "@/domain/certification";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { COURSES_CHECKBOX_ITEMS } from "@/constants/course";
+import { COURSE_CHECKBOXES, CourseCode } from "@/constants/courses";
 
 export function CoursesCompareSetting({
   currentCourse,
 }: {
-  currentCourse: CertificationCode;
+  currentCourse: CourseCode;
 }) {
   const { state, dispatch } = useApp();
 
-  const courses = state.courses || [];
+  const courses = state?.courses || [];
 
   return (
     <Card>
@@ -23,7 +22,7 @@ export function CoursesCompareSetting({
       </CardHeader>
       <CardContent>
         <div className="flex flex-row items-center gap-4">
-          {COURSES_CHECKBOX_ITEMS.map((item) => (
+          {COURSE_CHECKBOXES.map((item) => (
             <div key={item.id} className="flex items-center gap-2">
               <Checkbox
                 id={item.id}

@@ -2,10 +2,9 @@
 
 import React from "react";
 import { useSearchParams } from "next/navigation";
-import { COURSES } from "@/constants/course";
 import { useApp } from "@/context/app.context";
-import { CertificationCode } from "@/domain/certification";
 import { PARAM_KEYS } from "@/constants/paramKeys";
+import { COURSE_CODES } from "@/constants/courses";
 
 export function SyncSharedCoursesParam() {
   const { dispatch } = useApp();
@@ -19,7 +18,7 @@ export function SyncSharedCoursesParam() {
       courses
         ?.split(",")
         .map((c) => c.toLowerCase())
-        .filter((c) => COURSES.includes(c as CertificationCode)) || [];
+        .filter((c) => COURSE_CODES.includes(c as any)) || [];
 
     if (validCourses.length > 0) {
       dispatch({ type: "set-courses", payload: validCourses });
