@@ -14,7 +14,7 @@ type State = {
 type AppProviderProps = { children: React.ReactNode };
 
 const CountStateContext = React.createContext<
-  { state: State; dispatch: Dispatch } | undefined
+  { state: State | undefined; dispatch: Dispatch } | undefined
 >(undefined);
 
 function appReducer(state: State, action: Action) {

@@ -20,7 +20,7 @@ import { Separator } from "./ui/separator";
 export function LectureTags({ tags }: { tags: string[] }) {
   const { state } = useApp();
 
-  if (state.showTag === false) {
+  if (!state?.showTag) {
     return null;
   }
 
