@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cantrill AWS Courses Curriculum Comparer
 
-## Getting Started
+Created with love by: `Thang`
 
-First, run the development server:
+<!-- TODO: 🔗 Deploy and add link here -->
+<!-- View online at: [https://lqt-movie-browser.netlify.app/](https://lqt-movie-browser.netlify.app/) -->
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Summary: This web app allows user compare **curriculum** between [Cantrill AWS courses](https://learn.cantrill.io/courses/category/aws)
+
+<!-- ## Video Walkthrough
+Here's a walkthrough of implemented user stories.
+To create a GIF, use [LiceCap](http://www.cockos.com/licecap/), [RecordIt](http://www.recordit.co), or [Loom](http://www.useloom.com), and link the image here in the markdown.
 ```
+<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+``` -->
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<!-- TODO: 🎬 Make a gif and show here -->
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## User Stories
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### The following functionalities are completed:
 
-## Learn More
+- [x] The user can see the list of Cantrill courses for AWS on a page.
 
-To learn more about Next.js, take a look at the following resources:
+  - [x] For each course, the user can see the summary of the curriculum (total/theory/demo duration).
+  - [x] For each course, include a link to display a full curriculum on another page.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [x] In the detail page:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  - [x] The user can see the list of all lectures, group to sections.
+  - [x] For each lecture, the use an see the name, tags, duration, and the courses that also has this lecture.
+  - [x] The user can show/hide the lectures tags.
+  - [x] The user can change the courses to compare to.
 
-## Deploy on Vercel
+### What's next
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [ ] Add navigation bar
+- [ ] Add a shared button
+- [ ] Add about page
+- [ ] Add credit
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+    Copyright [2024] [Le Quang Thang]
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
