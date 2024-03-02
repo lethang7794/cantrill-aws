@@ -1,9 +1,9 @@
-export const warningTagMatcher = /NEED|DON'T|DONT/gi;
+export const warningTagMatcher = /NEED|DON'T|DONT|UPDATE/gi;
 export const allTagMatcher = /ALL/gi;
 export const associateLevelTagMatcher = /ASSOCIATE|DVA|SAA|SOA/gi;
 export const proLevelTagMatcher = /PRO(?!D)|SAP|DOP/gi;
 export const specialtyLevelTagMatcher = /ANS|SCS/gi;
-export const demoTagMatcher = /DEMO|WALKTHROUGH/gi;
+export const demoTagMatcher = /DEMO|WALKTHROUGH|PROJECT/gi;
 export const tagBracesMatcher = /[[\]]/gi;
 export const refresherTagMatcher = /REFRESHER|OPTIONAL/gi;
 export const newOrUpdateTagMatcher = /NEW|\d{6}/gi;

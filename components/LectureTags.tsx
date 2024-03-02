@@ -119,12 +119,15 @@ function sanitizeTag(tag: string): string {
       // remove update
       .replaceAll(/UPDATED*/gi, "")
       .replaceAll("NEEDS", "NEEDS UPDATE")
+      .replaceAll("UI S", "UI UPDATES")
       // &
       .replaceAll("/", " & ")
       .replaceAll(/(?!\w)&(?=\w)/gi, " & ")
       .replaceAll("AND", "&")
       // make the semantic clear
       .replaceAll("ADVANCEDDEMO", "ADVANCED DEMO")
+      .replaceAll("ADVDEMO", "ADVANCED DEMO")
+      .replaceAll("MINIPROJECT", "MINI PROJECT")
       .replaceAll("SAPRO", "SAP")
       // remove redundancy shared
       .replaceAll("SHARED", "")
