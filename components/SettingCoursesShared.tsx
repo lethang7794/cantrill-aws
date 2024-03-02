@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { COURSE_CHECKBOXES, CourseCode } from "@/constants/courses";
 
-export function CoursesCompareSetting({
+export function SettingCoursesShared({
   currentCourse,
 }: {
   currentCourse: CourseCode;

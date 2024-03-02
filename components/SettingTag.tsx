@@ -4,7 +4,7 @@ import { useApp } from "@/context/app.context";
 import { Switch } from "./ui/switch";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 
-export function ToggleShowTag() {
+export function SettingTag() {
   const { state, dispatch } = useApp();
 
   return (

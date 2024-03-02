@@ -10,10 +10,10 @@ import { CourseTime } from "@/components/CourseTime";
 import { CourseTitle } from "@/components/CourseTitle";
 import { isDemoLecture } from "@/lib/lecture";
 import { CertificationBadge } from "@/components/CertificationBadge";
-import { ToggleShowTag } from "@/components/ToggleShowTag";
-import { CoursesCompareSetting } from "@/components/CoursesCompareSetting";
+import { SettingTag } from "@/components/SettingTag";
 import { Suspense } from "react";
 import { SyncSharedCoursesParam } from "@/components/SyncSharedCoursesParam";
+import { SettingCoursesShared } from "@/components/SettingCoursesShared";
 
 export async function generateStaticParams() {
   const flatCourses = await getFlatCourses();
@@ -81,8 +81,8 @@ export default async function CoursePage({
         </div>
       </div>
       <div className="pt-8 flex gap-4 justify-center">
-        <ToggleShowTag />
-        <CoursesCompareSetting currentCourse={slug as any} />
+        <SettingTag />
+        <SettingCoursesShared currentCourse={slug as any} />
       </div>
       {sections.map((s: any, idx: any) => (
         <ul className="my-8" key={s.title}>
