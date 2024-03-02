@@ -49,6 +49,7 @@ function setLocalStorage(state: State) {
 
 function AppProvider({ children }: AppProviderProps) {
   const [state, dispatch] = React.useReducer(appReducer, initState, () => {
+    if (typeof window == "undefined") return;
     const stickyValue = window.localStorage.getItem(
       LOCAL_STORAGE_APP_STATE_KEY
     );
