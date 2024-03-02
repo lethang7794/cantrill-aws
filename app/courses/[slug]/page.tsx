@@ -12,6 +12,8 @@ import { isDemoLecture } from "@/lib/lecture";
 import { CertificationBadge } from "@/components/CertificationBadge";
 import { ToggleShowTag } from "@/components/ToggleShowTag";
 import { CoursesCompareSetting } from "@/components/CoursesCompareSetting";
+import { Suspense } from "react";
+import { SyncSharedCoursesParam } from "@/components/SyncSharedCoursesParam";
 
 export async function generateStaticParams() {
   const flatCourses = await getFlatCourses();
@@ -66,6 +68,9 @@ export default async function CoursePage({
   const sections = course.sections;
   return (
     <>
+      <Suspense fallback={null}>
+        <SyncSharedCoursesParam />
+      </Suspense>
       <div className="z-10 sticky top-0 bg-white bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex items-center justify-between border-b p-2">
           <CertificationBadge code={course.code} />
