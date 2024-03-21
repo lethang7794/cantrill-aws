@@ -43,7 +43,7 @@ const initState: State = {
 function setLocalStorage(state: State) {
   window.localStorage.setItem(
     LOCAL_STORAGE_APP_STATE_KEY,
-    JSON.stringify(state)
+    JSON.stringify(state),
   );
 }
 
@@ -51,7 +51,7 @@ function AppProvider({ children }: AppProviderProps) {
   const [state, dispatch] = React.useReducer(appReducer, initState, () => {
     if (typeof window == "undefined") return;
     const stickyValue = window.localStorage.getItem(
-      LOCAL_STORAGE_APP_STATE_KEY
+      LOCAL_STORAGE_APP_STATE_KEY,
     );
     return stickyValue !== null ? JSON.parse(stickyValue) : initState;
   });

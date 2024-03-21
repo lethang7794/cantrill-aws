@@ -4,7 +4,7 @@ import { CourseCode } from "@/constants/courses";
 export function CertificationBadge(
   props: ComponentProps<"img"> & {
     code: CourseCode;
-  }
+  },
 ) {
   return (
     <img

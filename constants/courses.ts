@@ -11,7 +11,7 @@ export const COURSES = {
 export type CourseCode = keyof typeof COURSES;
 
 export const COURSE_CODES = Object.entries(COURSES).map(
-  ([key]) => key as CourseCode
+  ([key]) => key as CourseCode,
 );
 
 export const COURSE_CHECKBOXES = Object.entries(COURSES).map(([key, val]) => ({
