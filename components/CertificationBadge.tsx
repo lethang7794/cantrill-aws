@@ -1,10 +1,10 @@
 import { ComponentProps } from "react";
-import { CertificationCode } from "@/domain/certification";
+import { CourseCode } from "@/constants/courses";
 
 export function CertificationBadge(
   props: ComponentProps<"img"> & {
-    code: CertificationCode;
-  },
+    code: CourseCode;
+  }
 ) {
   return (
     <img
@@ -16,6 +16,6 @@ export function CertificationBadge(
   );
 }
 
-export function getBadgeSrc(code: CertificationCode) {
+export function getBadgeSrc(code: CourseCode) {
   return `/aws/${code.slice(0, 3).toUpperCase()}.png`;
 }

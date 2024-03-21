@@ -30,7 +30,7 @@ function appReducer(state: State, action: Action) {
       return nextState;
     }
     default: {
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type: ${action}`);
     }
   }
 }

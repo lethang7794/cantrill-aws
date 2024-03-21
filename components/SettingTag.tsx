@@ -15,7 +15,7 @@ export function SettingTag() {
       <CardContent>
         <div className="flex items-center justify-center gap-2">
           <Switch
-            checked={state.showTag}
+            checked={state?.showTag || false}
             onCheckedChange={(event) => {
               dispatch({ type: "set-show-tag", payload: Boolean(event) });
             }}

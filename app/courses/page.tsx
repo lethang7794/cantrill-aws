@@ -1,10 +1,10 @@
-import { CertificationBadge } from "@/components/CertificationBadge";
-import { Button } from "@/components/ui/button";
-import { getCourses } from "@/lib/getCourses";
-import { cn } from "@/lib/utils";
-import { ExternalLink } from "lucide-react";
+import React, {PropsWithChildren} from "react";
+import {CertificationBadge} from "@/components/CertificationBadge";
+import {Button} from "@/components/ui/button";
+import {getCourses} from "@/lib/getCourses";
+import {cn} from "@/lib/utils";
+import {ExternalLink} from "lucide-react";
 import Link from "next/link";
-import React, { PropsWithChildren } from "react";
 
 export default async function CoursesPage() {
   const courses = await getCourses();
@@ -17,7 +17,7 @@ export default async function CoursesPage() {
             <li>
               <div>
                 <div className="flex items-center gap-2">
-                  <CertificationBadgeCell />
+                  <CertificationBadgeCell/>
 
                   <CertificationCodeCell>
                     <div>Code</div>
@@ -27,7 +27,7 @@ export default async function CoursesPage() {
                     <div>Name</div>
                   </CertificationNameCell>
 
-                  <div className="flex-grow" />
+                  <div className="flex-grow"/>
 
                   <div className="flex gap-6 items-center">
                     {/* <LessonCountCell>
@@ -48,31 +48,31 @@ export default async function CoursesPage() {
 
                     <LessonDurationCell header>
                       Theory
-                      <br />
+                      <br/>
                       <Unit>(hours)</Unit>
                     </LessonDurationCell>
                     <LessonDurationCell header>
                       Demo
-                      <br />
+                      <br/>
                       <Unit>(hours)</Unit>
                     </LessonDurationCell>
                     <LessonDurationCell header className="font-bold">
                       Total
-                      <br />
+                      <br/>
                       <Unit>(hours)</Unit>
                     </LessonDurationCell>
 
-                    <div />
+                    <div/>
 
                     <CurriculumCell>
                       Course
-                      <br />
+                      <br/>
                       Curriculum
                     </CurriculumCell>
 
                     <CourseUrlCell>
                       Course
-                      <br />
+                      <br/>
                       URL
                     </CourseUrlCell>
                   </div>
@@ -111,7 +111,7 @@ export default async function CoursesPage() {
                             <div className="italic">{course.title}</div>
                           </CertificationNameCell>
 
-                          <div className="flex-grow" />
+                          <div className="flex-grow"/>
 
                           <div className="flex gap-6 items-center">
                             {/* <LessonCountCell>
@@ -134,7 +134,7 @@ export default async function CoursesPage() {
                               {course.duration.total.hhmmss}
                             </LessonDurationCell>
 
-                            <div />
+                            <div/>
 
                             <CurriculumCell>
                               <Button asChild>
@@ -147,7 +147,7 @@ export default async function CoursesPage() {
                             <CourseUrlCell>
                               <Button asChild variant="outline">
                                 <a href={course.url} target="_blank">
-                                  <ExternalLink className="mr-2 h-4 w-4" />
+                                  <ExternalLink className="mr-2 h-4 w-4"/>
                                   Course
                                 </a>
                               </Button>
@@ -167,23 +167,23 @@ export default async function CoursesPage() {
   );
 }
 
-function CertificationBadgeCell({ children }: PropsWithChildren) {
+function CertificationBadgeCell({children}: PropsWithChildren) {
   return <div className="min-w-32">{children}</div>;
 }
 
-function CertificationCodeCell({ children }: PropsWithChildren) {
+function CertificationCodeCell({children}: PropsWithChildren) {
   return <div className="min-w-20 font-bold">{children}</div>;
 }
 
-function CertificationNameCell({ children }: PropsWithChildren) {
+function CertificationNameCell({children}: PropsWithChildren) {
   return <div className="min-w-32 font-bold">{children}</div>;
 }
 
 function LessonCountCell({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & PropsWithChildren) {
+                           children,
+                           className,
+                           ...props
+                         }: React.ComponentProps<"div"> & PropsWithChildren) {
   return (
     <div {...props} className={cn("min-w-16 text-right", className)}>
       {children}
@@ -192,17 +192,17 @@ function LessonCountCell({
 }
 
 const LessonDurationWrapper = ({
-  children,
-  className,
-}: React.ComponentProps<"div"> & PropsWithChildren) => (
+                                 children,
+                                 className,
+                               }: React.ComponentProps<"div"> & PropsWithChildren) => (
   <div className={cn("min-w-16 text-right", className)}>{children}</div>
 );
 
 function LessonDurationCell({
-  children,
-  header,
-  ...props
-}: React.ComponentProps<"div"> & PropsWithChildren<{ header?: boolean }>) {
+                              children,
+                              header,
+                              ...props
+                            }: React.ComponentProps<"div"> & PropsWithChildren<{ header?: boolean }>) {
   if (header) {
     return <LessonDurationWrapper {...props}>{children}</LessonDurationWrapper>;
   }
@@ -216,7 +216,7 @@ function LessonDurationCell({
   return <LessonDurationWrapper {...props}>{hour}h</LessonDurationWrapper>;
 }
 
-function Unit({ children }: PropsWithChildren) {
+function Unit({children}: PropsWithChildren) {
   return <div className="text-xs">{children}</div>;
 }
 

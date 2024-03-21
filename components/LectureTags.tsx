@@ -69,6 +69,7 @@ export const LectureTag = React.memo<{ tag: string }>(({ tag }) => {
     </Badge>
   );
 });
+LectureTag.displayName = "LectureTag";
 
 function isWarningTag(tag: string): boolean {
   let match = tag.match(warningTagMatcher);
