@@ -6,7 +6,7 @@ export function LectureTitle({
   titleWithDuration: string;
 }) {
   return (
-    <div className="min-w-36">
+    <div className="min-w-36 text-ellipsis overflow-hidden line-clamp-2 lg:line-clamp-none">
       {titleWithDuration.replaceAll(lectureNameRegex, "")}
     </div>
   );

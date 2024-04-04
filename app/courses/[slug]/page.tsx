@@ -88,7 +88,7 @@ export default async function CoursePage({
         <ul className="my-8" key={s.title}>
           <div className="sticky top-[73px] bg-white bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="flex gap-4 mb-4 py-1 border-b px-2">
-              <div className="text-3xl font-semibold">{`${idx + 1}. ${
+              <div className="text-3xl font-semibold line-clamp-1 lg:line-clamp-2">{`${idx + 1}. ${
                 s.title
               }`}</div>
               <div className="flex-grow"></div>
