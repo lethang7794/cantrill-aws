@@ -21,7 +21,7 @@ export function SettingCoursesShared({
         <CardTitle>Shared with</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-row flex-wrap items-center gap-4">
           {COURSE_CHECKBOXES.map((item) => (
             <div key={item.id} className="flex items-center gap-2">
               <Checkbox

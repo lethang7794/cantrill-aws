@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from "react";
 import { isDemoLecture } from "@/lib/lecture";
 
 const LectureIconWrapper = ({ children }: PropsWithChildren) => (
-  <div className="w-5">{children}</div>
+  <div className="w-6">{children}</div>
 );
 
 export function LectureIcon({ lecture }: { lecture: Record<string, any> }) {

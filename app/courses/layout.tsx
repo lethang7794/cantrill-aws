@@ -8,7 +8,7 @@ export default function PrimaryLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex min-h-screen flex-col items-left justify-between p-16 gap-4">
+    <main className="flex min-h-screen flex-col items-left justify-between py-16 gap-4">
       <div className="container">{children}</div>
     </main>
   );

@@ -239,5 +239,5 @@ function CurriculumCell(props: PropsWithChildren) {
 }
 
 function CourseUrlCell(props: PropsWithChildren) {
-  return <div className="min-w-24 text-center">{props.children}</div>;
+  return <div className="min-w-28 text-center">{props.children}</div>;
 }

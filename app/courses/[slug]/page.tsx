@@ -29,7 +29,7 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata,
+  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const slug = params.slug;
 
@@ -80,7 +80,7 @@ export default async function CoursePage({
           </div>
         </div>
       </div>
-      <div className="pt-8 flex gap-4 justify-center">
+      <div className="pt-8 flex flex-wrap gap-4 justify-center">
         <SettingTag />
         <SettingCoursesShared currentCourse={slug as any} />
       </div>
@@ -98,14 +98,11 @@ export default async function CoursePage({
               />
             </div>
           </div>
-          <ul className="flex flex-col gap-2 px-2">
+          <ul className="flex flex-col gap-4 px-2">
             {s.lectures.map((l: any) => {
               let isDemo = isDemoLecture(l);
               return (
-                <li
-                  className="flex gap-4 items-center"
-                  key={l.titleWithDuration}
-                >
+                <li className="flex gap-4" key={l.titleWithDuration}>
                   <LectureIcon lecture={l} />
                   <LectureTitle titleWithDuration={l.titleWithDuration} />
                   <div className="flex-grow"></div>
