@@ -4,7 +4,8 @@ import { useApp } from "@/context/app.context";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { COURSE_CHECKBOXES, CourseCode } from "@/constants/courses";
+import { COURSES, COURSE_CHECKBOXES, CourseCode } from "@/constants/courses";
+import { cn } from "@/lib/utils";
 
 export function SettingCoursesShared({
   currentCourse,
@@ -40,7 +41,16 @@ export function SettingCoursesShared({
                       });
                 }}
               />
-              <Label htmlFor={item.id}>{item.label}</Label>
+              <Label
+                htmlFor={item.id}
+                className={cn(
+                  "font-semibold",
+                  currentCourse == item.id && "font-bold underline"
+                )}
+                style={{ color: COURSES[item.id].color }}
+              >
+                {item.label}
+              </Label>
             </div>
           ))}
         </div>

@@ -17,7 +17,7 @@ function SharedWith({
   return (
     <div
       className={cn(
-        "mt-1 font-semibold text-xs min-w-8 text-center text-[#3638EE]",
+        "mt-1 font-semibold text-xs min-w-8 text-center",
         cur == target && "font-bold underline"
       )}
       style={{ color: COURSES[target].color }}
