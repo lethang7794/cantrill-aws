@@ -2,9 +2,7 @@ import { promises as fs } from "fs";
 import { cache } from "react";
 
 export const getCourses = cache(async () => {
-  console.log("getCourses");
   const file = await fs.readFile(process.cwd() + "/app/courses.json", "utf8");
-  console.log("getCourses");
   const data = JSON.parse(file);
   return data;
 });
@@ -21,7 +19,6 @@ export const getFlatCourses = cache(async () => {
 });
 
 export const coursesByKey = cache(async () => {
-  console.log("coursesByKey");
   let courses = await getCourses();
   let flat: any = {};
   Object.entries(courses).forEach(([level, levelCourse]) => {

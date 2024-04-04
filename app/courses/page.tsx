@@ -5,6 +5,7 @@ import { getCourses } from "@/lib/getCourses";
 import { cn } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { COURSES, CourseCode } from "@/constants/courses";
 
 export default async function CoursesPage() {
   const courses = await getCourses();
@@ -24,7 +25,7 @@ export default async function CoursesPage() {
                   </CertificationCodeCell>
 
                   <CertificationNameCell>
-                    <div>Name</div>
+                    <div>Certification Name</div>
                   </CertificationNameCell>
 
                   <div className="flex-grow" />
@@ -109,6 +110,15 @@ export default async function CoursesPage() {
 
                           <CertificationNameCell>
                             <div className="italic">{course.title}</div>
+                            <a
+                              href={
+                                COURSES[code.toLowerCase() as CourseCode]
+                                  ?.certificateURL
+                              }
+                              target="_blank"
+                            >
+                              <ExternalLink className="mr-2 h-4 w-4" />
+                            </a>
                           </CertificationNameCell>
 
                           <div className="flex-grow" />
@@ -176,7 +186,11 @@ function CertificationCodeCell({ children }: PropsWithChildren) {
 }
 
 function CertificationNameCell({ children }: PropsWithChildren) {
-  return <div className="min-w-32 font-bold">{children}</div>;
+  return (
+    <div className="flex items-center justify-center gap-2 min-w-32 font-bold">
+      {children}
+    </div>
+  );
 }
 
 function LessonCountCell({
