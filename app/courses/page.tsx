@@ -109,7 +109,9 @@ export default async function CoursesPage() {
                           </CertificationCodeCell>
 
                           <CertificationNameCell>
-                            <div className="italic">{course.title}</div>
+                            <div className="min-w-28 italic">
+                              {course.title}
+                            </div>
                             <a
                               href={
                                 COURSES[code.toLowerCase() as CourseCode]
@@ -187,7 +189,7 @@ function CertificationCodeCell({ children }: PropsWithChildren) {
 
 function CertificationNameCell({ children }: PropsWithChildren) {
   return (
-    <div className="flex items-center justify-center gap-2 min-w-32 font-bold">
+    <div className="flex items-center justify-center gap-2 min-w-52 font-bold">
       {children}
     </div>
   );
