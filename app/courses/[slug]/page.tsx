@@ -1,5 +1,9 @@
+import type { Metadata, ResolvingMetadata } from "next";
+import Link from "next/link";
+import { Suspense } from "react";
+import slugify from "slugify";
+
 import { coursesByKey, getFlatCourses } from "@/lib/getCourses";
-import { Metadata, ResolvingMetadata } from "next";
 import { LectureSharedWithOthers } from "@/components/LectureSharedWithOthers";
 import { LectureTags } from "@/components/LectureTags";
 import { LectureIcon } from "@/components/LectureIcon";
@@ -11,7 +15,6 @@ import { CourseTitle } from "@/components/CourseTitle";
 import { isDemoLecture } from "@/lib/lecture";
 import { CertificationBadge } from "@/components/CertificationBadge";
 import { SettingTag } from "@/components/SettingTag";
-import { Suspense } from "react";
 import { SyncSharedCoursesParam } from "@/components/SyncSharedCoursesParam";
 import { SettingCoursesShared } from "@/components/SettingCoursesShared";
 
@@ -29,7 +32,7 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const slug = params.slug;
 
@@ -84,41 +87,49 @@ export default async function CoursePage({
         <SettingTag />
         <SettingCoursesShared currentCourse={slug as any} />
       </div>
-      {sections.map((s: any, idx: any) => (
-        <ul className="my-8" key={s.title}>
-          <div className="sticky top-[73px] bg-white bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="flex gap-4 mb-4 py-1 border-b px-2">
-              <div className="text-3xl font-semibold line-clamp-1 lg:line-clamp-2">{`${idx + 1}. ${
-                s.title
-              }`}</div>
-              <div className="flex-grow"></div>
-              <SectionTime
-                section={s}
-                side={idx === 0 ? "bottom" : undefined}
-              />
+      {sections.map((s: any, idx: any) => {
+        const sectionTitle = `${idx + 1}. ${s.title}`;
+        const sectionID = slugify(`${idx + 1} ${s.title}`, { lower: true });
+        return (
+          <ul className="my-8" key={s.title}>
+            <div className="sticky top-[73px] bg-white bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <div className="flex gap-4 mb-4 py-1 border-b px-2">
+                <div id={sectionID} className="scroll-m-20" />
+                <Link
+                  className="text-3xl font-semibold line-clamp-1 lg:line-clamp-2"
+                  href={`#${sectionID}`}
+                >
+                  {sectionTitle}
+                </Link>
+                <div className="flex-grow"></div>
+                <SectionTime
+                  section={s}
+                  side={idx === 0 ? "bottom" : undefined}
+                />
+              </div>
             </div>
-          </div>
-          <ul className="flex flex-col gap-4 px-2">
-            {s.lectures.map((l: any) => {
-              let isDemo = isDemoLecture(l);
-              return (
-                <li className="flex gap-4" key={l.titleWithDuration}>
-                  <LectureIcon lecture={l} />
-                  <LectureTitle titleWithDuration={l.titleWithDuration} />
-                  <div className="flex-grow"></div>
-                  <LectureTags tags={l.tags} />
-                  <div></div>
-                  <LectureSharedWithOthers
-                    sharedWith={l.sharedWith}
-                    cur={course.code}
-                  />
-                  <LectureTime lecture={l} isDemo={isDemo} />
-                </li>
-              );
-            })}
+            <ul className="flex flex-col gap-4 px-2">
+              {s.lectures.map((l: any) => {
+                let isDemo = isDemoLecture(l);
+                return (
+                  <li className="flex gap-4" key={l.titleWithDuration}>
+                    <LectureIcon lecture={l} />
+                    <LectureTitle titleWithDuration={l.titleWithDuration} />
+                    <div className="flex-grow"></div>
+                    <LectureTags tags={l.tags} />
+                    <div></div>
+                    <LectureSharedWithOthers
+                      sharedWith={l.sharedWith}
+                      cur={course.code}
+                    />
+                    <LectureTime lecture={l} isDemo={isDemo} />
+                  </li>
+                );
+              })}
+            </ul>
           </ul>
-        </ul>
-      ))}
+        );
+      })}
     </>
   );
 }
