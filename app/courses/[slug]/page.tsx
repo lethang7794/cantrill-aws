@@ -17,6 +17,7 @@ import { CertificationBadge } from "@/components/CertificationBadge";
 import { SettingTag } from "@/components/SettingTag";
 import { SyncSharedCoursesParam } from "@/components/SyncSharedCoursesParam";
 import { SettingCoursesShared } from "@/components/SettingCoursesShared";
+import { LectureNew } from "@/components/LectureNew";
 
 export async function generateStaticParams() {
   const flatCourses = await getFlatCourses();
@@ -116,8 +117,10 @@ export default async function CoursePage({
                     <LectureIcon lecture={l} />
                     <LectureTitle titleWithDuration={l.titleWithDuration} />
                     <div className="flex-grow"></div>
-                    <LectureTags tags={l.tags} />
-                    <div></div>
+                    <LectureTags tags={l.tags}>
+                      <LectureNew sharedWith={l.sharedWith} cur={course.code} />
+                    </LectureTags>
+                    <div />
                     <LectureSharedWithOthers
                       sharedWith={l.sharedWith}
                       cur={course.code}

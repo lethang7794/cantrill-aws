@@ -17,11 +17,22 @@ import {
 import { useApp } from "@/context/app.context";
 import { Separator } from "./ui/separator";
 
-export function LectureTags({ tags }: { tags: string[] }) {
+export function LectureTags({
+  tags,
+  children,
+}: { tags: string[]; children: React.ReactNode }) {
   const { state } = useApp();
 
   if (!state?.showTag) {
-    return null;
+    return (
+      <>
+        <div className="flex gap-2 flex-wrap justify-end">{children}</div>
+        <Separator
+          orientation="vertical"
+          className="min-h-8 -mr-3 ml-1 -my-2"
+        />
+      </>
+    );
   }
 
   return (
@@ -30,6 +41,7 @@ export function LectureTags({ tags }: { tags: string[] }) {
         {tags.map((t: string) => (
           <LectureTag key={t} tag={t} />
         ))}
+        {children}
       </div>
       <Separator orientation="vertical" className="min-h-8 -mr-3 ml-1 -my-2" />
     </>
