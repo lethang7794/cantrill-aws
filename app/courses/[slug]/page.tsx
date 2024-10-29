@@ -94,8 +94,8 @@ export default async function CoursePage({
         return (
           <ul className="my-8" key={s.title}>
             <div className="sticky top-[73px] bg-white bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <div className="flex gap-4 mb-4 py-1 border-b px-2">
-                <div id={sectionID} className="scroll-m-20" />
+              <div id={sectionID} className="scroll-m-20" />
+              <div className="flex gap-4 mb-4 py-1 border-b px-2 w-full">
                 <Link
                   className="text-3xl font-semibold line-clamp-1 lg:line-clamp-2"
                   href={`#${sectionID}`}
