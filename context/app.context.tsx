@@ -1,32 +1,35 @@
 "use client";
 
 import * as React from "react";
-import { LOCAL_STORAGE_APP_STATE_KEY } from "@/constants/localStorage";
+import {
+  initialState,
+  readAppState,
+  saveAppState,
+  type AppState,
+} from "@/lib/app-state";
 
 type Action =
+  | { type: "restore"; payload: AppState }
   | { type: "set-show-tag"; payload: boolean }
   | { type: "set-courses"; payload: string[] };
 type Dispatch = (action: Action) => void;
-type State = {
-  showTag: boolean;
-  courses: string[];
-};
+type State = AppState;
 type AppProviderProps = { children: React.ReactNode };
 
 const CountStateContext = React.createContext<
-  { state: State | undefined; dispatch: Dispatch } | undefined
+  { state: State; dispatch: Dispatch } | undefined
 >(undefined);
 
 function appReducer(state: State, action: Action) {
   switch (action.type) {
+    case "restore":
+      return action.payload;
     case "set-show-tag": {
       const nextState = { ...state, showTag: action.payload };
-      setLocalStorage(nextState);
       return nextState;
     }
     case "set-courses": {
       const nextState = { ...state, courses: action.payload };
-      setLocalStorage(nextState);
       return nextState;
     }
     default: {
@@ -35,26 +38,19 @@ function appReducer(state: State, action: Action) {
   }
 }
 
-const initState: State = {
-  showTag: true,
-  courses: [],
-};
-
-function setLocalStorage(state: State) {
-  window.localStorage.setItem(
-    LOCAL_STORAGE_APP_STATE_KEY,
-    JSON.stringify(state),
-  );
-}
-
 function AppProvider({ children }: AppProviderProps) {
-  const [state, dispatch] = React.useReducer(appReducer, initState, () => {
-    if (typeof window == "undefined") return;
-    const stickyValue = window.localStorage.getItem(
-      LOCAL_STORAGE_APP_STATE_KEY,
-    );
-    return stickyValue !== null ? JSON.parse(stickyValue) : initState;
-  });
+  const [state, dispatch] = React.useReducer(appReducer, initialState);
+  const [restored, setRestored] = React.useState(false);
+  React.useEffect(() => {
+    dispatch({
+      type: "restore",
+      payload: readAppState(new URLSearchParams(window.location.search)),
+    });
+    setRestored(true);
+  }, []);
+  React.useEffect(() => {
+    if (restored) saveAppState(state);
+  }, [state, restored]);
 
   const value = React.useMemo(() => {
     return { state, dispatch };

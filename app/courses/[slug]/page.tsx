@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import slugify from "slugify";
 
@@ -66,7 +67,7 @@ export default async function CoursePage({
   const slug = params.slug.toLowerCase();
   const course = courses[slug];
   if (!course) {
-    return <>Not Found</>;
+    notFound();
   }
 
   const sections = course.sections;
@@ -92,7 +93,7 @@ export default async function CoursePage({
         const sectionTitle = `${idx + 1}. ${s.title}`;
         const sectionID = slugify(`${idx + 1} ${s.title}`, { lower: true });
         return (
-          <ul className="my-8" key={s.title}>
+          <section className="my-8" key={s.title}>
             <div className="sticky top-[73px] bg-white bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <div id={sectionID} className="scroll-m-20" />
               <div className="flex gap-4 mb-4 py-1 border-b px-2 w-full">
@@ -130,7 +131,7 @@ export default async function CoursePage({
                 );
               })}
             </ul>
-          </ul>
+          </section>
         );
       })}
     </>

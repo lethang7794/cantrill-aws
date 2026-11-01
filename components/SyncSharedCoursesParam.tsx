@@ -4,29 +4,27 @@ import React from "react";
 import { useSearchParams } from "next/navigation";
 import { useApp } from "@/context/app.context";
 import { PARAM_KEYS } from "@/constants/paramKeys";
-import { COURSE_CODES } from "@/constants/courses";
+import { normalizeCourses } from "@/lib/app-state";
 
 export function SyncSharedCoursesParam() {
   const { dispatch } = useApp();
   const searchParams = useSearchParams();
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const courses = searchParams.get(PARAM_KEYS.sharedWith);
     const hasHideTag = searchParams.has(PARAM_KEYS.hideTag);
 
-    const validCourses =
-      courses
-        ?.split(",")
-        .map((c) => c.toLowerCase())
-        .filter((c) => COURSE_CODES.includes(c as any)) || [];
+    const validCourses = normalizeCourses(
+      courses?.split(",").map((c) => c.trim().toLowerCase()),
+    );
 
-    if (validCourses.length > 0) {
+    if (courses !== null) {
       dispatch({ type: "set-courses", payload: validCourses });
     }
     if (hasHideTag) {
       dispatch({ type: "set-show-tag", payload: false });
     }
-  }, []);
+  }, [searchParams, dispatch]);
 
   return null;
 }

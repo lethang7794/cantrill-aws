@@ -1,9 +1,11 @@
 import { promises as fs } from "fs";
 import { cache } from "react";
+import { validateCourses } from "./validate-courses";
 
 export const getCourses = cache(async () => {
   const file = await fs.readFile(process.cwd() + "/app/courses.json", "utf8");
   const data = JSON.parse(file);
+  validateCourses(data);
   return data;
 });
 

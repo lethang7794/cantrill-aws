@@ -1,4 +1,4 @@
-import { demoTagMatcher } from "@/constants/tag";
+import { demoTagMatcher } from "../constants/tag";
 
 export function isDemoLecture(lecture: any): boolean {
   let match = lecture?.titleWithDuration?.match(demoTagMatcher);
@@ -6,5 +6,15 @@ export function isDemoLecture(lecture: any): boolean {
 }
 
 export function convertTime(seconds: number) {
-  return new Date(seconds * 1000).toISOString().slice(14, 19);
+  if (!Number.isSafeInteger(seconds) || seconds < 0) {
+    throw new RangeError(
+      "Duration must be a non-negative integer number of seconds",
+    );
+  }
+  const hours = Math.floor(seconds / 3600);
+  const minutes = String(Math.floor(seconds / 60) % 60).padStart(2, "0");
+  const remainder = String(seconds % 60).padStart(2, "0");
+  return hours > 0
+    ? `${hours}:${minutes}:${remainder}`
+    : `${minutes}:${remainder}`;
 }

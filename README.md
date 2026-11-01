@@ -54,3 +54,15 @@ To create a GIF, use [LiceCap](http://www.cockos.com/licecap/), [RecordIt](http:
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+## Development and regression checks
+
+Use Node.js 22.18 or newer. Run `npm test` for dependency-free tests, or install the locked dependencies with `pnpm install --frozen-lockfile` and use `pnpm dev` / `pnpm build` for the application.
+
+Tests cover saved preferences, blocked storage, URL overrides, duration formatting, and all courses in `app/courses.json`. Curriculum validation also runs when course data is loaded, so malformed references, counts, or duration totals stop the build instead of producing misleading pages.
+
+## Updating curriculum data
+
+`app/courses.json` is a checked-in snapshot, not a live feed. The initial date in `app/curriculum-metadata.json` comes from the last Git commit that changed that file (`7eb21a1c5819a85365490a8ffc9b4c4b047cb61e`, March 2, 2024); it is not a claim that the courses have been reviewed recently.
+
+When refreshing the snapshot, verify the provider's curriculum, update course definitions in `constants/courses.ts` if needed, and update the snapshot metadata with a traceable source revision. Run `npm test` and `pnpm build` before publishing. Do not advance the displayed date for unrelated code changes.
